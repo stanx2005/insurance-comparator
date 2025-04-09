@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
-import { FaArrowRight, FaChartLine, FaShieldAlt, FaEuroSign, FaUserFriends, FaSearch } from 'react-icons/fa'
+import { FaArrowRight, FaChartLine, FaShieldAlt, FaEuroSign, FaUserFriends, FaSearch, FaStar, FaHospital, FaUserMd, FaClinicMedical } from 'react-icons/fa'
 
 type CoverageType = 'personalized' | 'minimal' | 'balanced' | 'maximal'
 type CoverageLevels = {
@@ -79,6 +79,7 @@ export default function Home() {
   })
 
   const [isVisible, setIsVisible] = useState(false)
+  const [selectedTab, setSelectedTab] = useState('particuliers')
 
   useEffect(() => {
     setIsVisible(true)
@@ -297,6 +298,31 @@ export default function Home() {
     )
   }
 
+  const priceData = {
+    age: [
+      { range: '16-25 ans', price: '50,82 €' },
+      { range: '26-35 ans', price: '64,01 €' },
+      { range: '36-49 ans', price: '79,52 €' },
+      { range: '50-55 ans', price: '97,71 €' },
+      { range: '56-65 ans', price: '114,93 €' },
+      { range: '66-120 ans', price: '133,23 €' }
+    ],
+    location: [
+      { dept: 'Paris (75)', price: '128,22 €' },
+      { dept: 'Bouches-du-Rhône (13)', price: '137,21 €' },
+      { dept: 'Nord (59)', price: '137,30 €' },
+      { dept: 'Loire-Atlantique (44)', price: '120,87 €' },
+      { dept: 'Ille-et-Vilaine (35)', price: '111,76 €' },
+      { dept: 'Moselle (57)', price: '114,79 €' }
+    ],
+    coverage: [
+      { level: 'Garanties renforcées', price: '135,21 €' },
+      { level: 'Garanties hybrides', price: '86,80 €' },
+      { level: 'Garanties intermédiaires', price: '67,53 €' },
+      { level: 'Garanties économiques', price: '48,04 €' }
+    ]
+  }
+
   return (
     <>
       <Head>
@@ -378,100 +404,186 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          <motion.div
+          <motion.section
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+            className="mb-16"
           >
-            <motion.div
-              variants={itemVariants}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
-            >
-              <div className="text-blue-600 mb-4">
-                <FaChartLine className="text-3xl" />
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Quel est le prix d'une mutuelle santé ?</h2>
+            
+            <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8 mb-12">
+              <h3 className="text-2xl font-semibold mb-6">Prix de la mutuelle selon l'âge</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {priceData.age.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    className="bg-gray-50 p-4 rounded-lg"
+                  >
+                    <p className="font-medium text-gray-900">{item.range}</p>
+                    <p className="text-blue-600 font-bold text-xl">{item.price}</p>
+                  </motion.div>
+                ))}
               </div>
-              <h3 className="text-xl font-semibold mb-2">Comparaison complète</h3>
-              <p className="text-gray-600">
-                Comparez les garanties, les prix et les services de plus de 3200 formules santé.
-              </p>
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
-            >
-              <div className="text-blue-600 mb-4">
-                <FaShieldAlt className="text-3xl" />
+            <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8 mb-12">
+              <h3 className="text-2xl font-semibold mb-6">Prix des mutuelles selon les zones géographiques</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {priceData.location.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    className="bg-gray-50 p-4 rounded-lg"
+                  >
+                    <p className="font-medium text-gray-900">{item.dept}</p>
+                    <p className="text-blue-600 font-bold text-xl">{item.price}</p>
+                  </motion.div>
+                ))}
               </div>
-              <h3 className="text-xl font-semibold mb-2">Garanties adaptées</h3>
-              <p className="text-gray-600">
-                Trouvez la couverture qui correspond à votre profil et à vos besoins spécifiques.
-              </p>
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
-            >
-              <div className="text-blue-600 mb-4">
-                <FaEuroSign className="text-3xl" />
+            <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8">
+              <h3 className="text-2xl font-semibold mb-6">Prix de la mutuelle selon le niveau de garanties</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                {priceData.coverage.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    className="bg-gray-50 p-4 rounded-lg"
+                  >
+                    <p className="font-medium text-gray-900">{item.level}</p>
+                    <p className="text-blue-600 font-bold text-xl">{item.price}</p>
+                  </motion.div>
+                ))}
               </div>
-              <h3 className="text-xl font-semibold mb-2">Économies garanties</h3>
-              <p className="text-gray-600">
-                Réalisez jusqu'à 415€ d'économies en moyenne sur votre mutuelle santé.
-              </p>
             </motion.div>
-          </motion.div>
+          </motion.section>
 
-          <motion.div
+          <motion.section
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="bg-white rounded-xl shadow-lg p-8 mb-16"
+            className="mb-16"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Comment ça marche ?</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Comment comparer et choisir votre mutuelle ?</h2>
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <motion.div
                 variants={itemVariants}
-                className="flex flex-col items-center text-center"
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
               >
-                <div className="bg-blue-100 rounded-full p-4 mb-4">
-                  <FaUserFriends className="text-3xl text-blue-600" />
+                <div className="text-blue-600 mb-4">
+                  <FaUserFriends className="text-4xl" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">1. Définissez votre profil</h3>
-                <p className="text-gray-600">
-                  Indiquez votre situation personnelle et vos besoins en matière de santé.
-                </p>
+                <h3 className="text-xl font-semibold mb-4">1. Remplissez le formulaire</h3>
+                <ul className="text-gray-600 space-y-2">
+                  <li>• Votre situation personnelle</li>
+                  <li>• Vos besoins en santé</li>
+                  <li>• Votre budget mensuel</li>
+                </ul>
               </motion.div>
 
               <motion.div
                 variants={itemVariants}
-                className="flex flex-col items-center text-center"
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
               >
-                <div className="bg-blue-100 rounded-full p-4 mb-4">
-                  <FaSearch className="text-3xl text-blue-600" />
+                <div className="text-blue-600 mb-4">
+                  <FaSearch className="text-4xl" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">2. Comparez les offres</h3>
-                <p className="text-gray-600">
-                  Recevez instantanément les meilleures offres adaptées à votre profil.
-                </p>
+                <h3 className="text-xl font-semibold mb-4">2. Comparez les offres</h3>
+                <ul className="text-gray-600 space-y-2">
+                  <li>• Analyse des garanties</li>
+                  <li>• Comparaison des prix</li>
+                  <li>• Services inclus</li>
+                </ul>
               </motion.div>
 
               <motion.div
                 variants={itemVariants}
-                className="flex flex-col items-center text-center"
+                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
               >
-                <div className="bg-blue-100 rounded-full p-4 mb-4">
-                  <FaShieldAlt className="text-3xl text-blue-600" />
+                <div className="text-blue-600 mb-4">
+                  <FaShieldAlt className="text-4xl" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">3. Souscrivez en ligne</h3>
-                <p className="text-gray-600">
-                  Choisissez votre mutuelle et souscrivez directement en ligne.
-                </p>
+                <h3 className="text-xl font-semibold mb-4">3. Souscrivez en ligne</h3>
+                <ul className="text-gray-600 space-y-2">
+                  <li>• Devis personnalisé</li>
+                  <li>• Souscription rapide</li>
+                  <li>• Assistance dédiée</li>
+                </ul>
               </motion.div>
             </div>
-          </motion.div>
+          </motion.section>
+
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Nos partenaires assureurs</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+              {['APRIL', 'MGEN', 'SWISS LIFE', 'AESIO', 'MMA', 'MATMUT'].map((partner, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="bg-white p-4 rounded-lg shadow hover:shadow-md transition duration-300 flex items-center justify-center"
+                >
+                  <p className="font-medium text-gray-900">{partner}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mb-16"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Avis clients</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  name: 'Sophie B.',
+                  rating: 5,
+                  comment: 'Excellent service, conseillère au top. Agréable et professionnelle.',
+                  date: '07/03/2025'
+                },
+                {
+                  name: 'François R.',
+                  rating: 5,
+                  comment: 'Renseignements clairs, très bonne comparaison des offres.',
+                  date: '08/03/2025'
+                },
+                {
+                  name: 'Mathilde L.',
+                  rating: 5,
+                  comment: 'Conseiller à l'écoute et échange très intéressant.',
+                  date: '07/03/2025'
+                }
+              ].map((review, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="bg-white p-6 rounded-xl shadow-lg"
+                >
+                  <div className="flex text-yellow-400 mb-2">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <FaStar key={i} />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 mb-4">{review.comment}</p>
+                  <div className="flex justify-between text-sm text-gray-500">
+                    <p>{review.name}</p>
+                    <p>{review.date}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
 
           <motion.div
             variants={containerVariants}
