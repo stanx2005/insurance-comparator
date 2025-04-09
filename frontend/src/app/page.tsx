@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import { FaArrowRight, FaChartLine, FaShieldAlt, FaEuroSign, FaUserFriends, FaSearch, FaStar, FaHospital, FaUserMd, FaClinicMedical } from 'react-icons/fa'
+import Partners from '@/components/Partners'
 
 type CoverageType = 'personalized' | 'minimal' | 'balanced' | 'maximal'
 type CoverageLevels = {
@@ -640,6 +641,7 @@ export default function Home() {
             <p>* Date de mise à jour : 02/04/2025. Étude des tarifs moyens proposés par nos partenaires assureurs, tous profils et tous niveaux de garanties confondus, du 1er au 31 Mars 2025.</p>
           </motion.div>
         </div>
+        <Partners />
       </main>
     </>
   )
