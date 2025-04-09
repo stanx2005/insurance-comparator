@@ -413,48 +413,66 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Quel est le prix d'une mutuelle santé ?</h2>
             
             <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8 mb-12">
-              <h3 className="text-2xl font-semibold mb-6">Prix de la mutuelle selon l'âge</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-center">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                  Prix de la mutuelle selon l'âge
+                </span>
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {priceData.age.map((item, index) => (
                   <motion.div
                     key={index}
                     variants={itemVariants}
-                    className="bg-gray-50 p-4 rounded-lg"
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-gradient-to-br from-white to-blue-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-blue-100"
                   >
-                    <p className="font-medium text-gray-900">{item.range}</p>
-                    <p className="text-blue-600 font-bold text-xl">{item.price}</p>
+                    <p className="font-medium text-gray-800 text-lg mb-2">{item.range}</p>
+                    <p className="text-blue-600 font-bold text-2xl">{item.price}</p>
+                    <p className="text-gray-500 text-sm mt-2">par mois</p>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8 mb-12">
-              <h3 className="text-2xl font-semibold mb-6">Prix des mutuelles selon les zones géographiques</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-center">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                  Prix des mutuelles selon les zones géographiques
+                </span>
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {priceData.location.map((item, index) => (
                   <motion.div
                     key={index}
                     variants={itemVariants}
-                    className="bg-gray-50 p-4 rounded-lg"
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-gradient-to-br from-white to-purple-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-purple-100"
                   >
-                    <p className="font-medium text-gray-900">{item.dept}</p>
-                    <p className="text-blue-600 font-bold text-xl">{item.price}</p>
+                    <p className="font-medium text-gray-800 text-lg mb-2">{item.dept}</p>
+                    <p className="text-purple-600 font-bold text-2xl">{item.price}</p>
+                    <p className="text-gray-500 text-sm mt-2">par mois</p>
                   </motion.div>
                 ))}
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8">
-              <h3 className="text-2xl font-semibold mb-6">Prix de la mutuelle selon le niveau de garanties</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <h3 className="text-2xl font-semibold mb-6 text-center">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                  Prix de la mutuelle selon le niveau de garanties
+                </span>
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {priceData.coverage.map((item, index) => (
                   <motion.div
                     key={index}
                     variants={itemVariants}
-                    className="bg-gray-50 p-4 rounded-lg"
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-gradient-to-br from-white to-green-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-green-100"
                   >
-                    <p className="font-medium text-gray-900">{item.level}</p>
-                    <p className="text-blue-600 font-bold text-xl">{item.price}</p>
+                    <p className="font-medium text-gray-800 text-lg mb-2">{item.level}</p>
+                    <p className="text-green-600 font-bold text-2xl">{item.price}</p>
+                    <p className="text-gray-500 text-sm mt-2">par mois</p>
                   </motion.div>
                 ))}
               </div>
@@ -523,15 +541,38 @@ export default function Home() {
             animate="visible"
             className="mb-16"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Nos partenaires assureurs</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {['APRIL', 'MGEN', 'SWISS LIFE', 'AESIO', 'MMA', 'MATMUT'].map((partner, index) => (
+            <h2 className="text-3xl font-bold text-center mb-12">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                Nos partenaires assureurs
+              </span>
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+              {[
+                { name: 'APRIL', logo: '/logos/april.png' },
+                { name: 'MGEN', logo: '/logos/mgen.png' },
+                { name: 'SWISS LIFE', logo: '/logos/swiss-life.png' },
+                { name: 'AESIO', logo: '/logos/aesio.png' },
+                { name: 'MMA', logo: '/logos/mma.png' },
+                { name: 'MATMUT', logo: '/logos/matmut.png' }
+              ].map((partner, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="bg-white p-4 rounded-lg shadow hover:shadow-md transition duration-300 flex items-center justify-center"
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center group"
                 >
-                  <p className="font-medium text-gray-900">{partner}</p>
+                  <div className="relative w-32 h-20 mb-4">
+                    <Image
+                      src={partner.logo}
+                      alt={`Logo ${partner.name}`}
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      className="transition-opacity duration-300 group-hover:opacity-90"
+                    />
+                  </div>
+                  <p className="font-medium text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
+                    {partner.name}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -543,8 +584,12 @@ export default function Home() {
             animate="visible"
             className="mb-16"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Avis clients</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h2 className="text-3xl font-bold text-center mb-12">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+                Avis clients
+              </span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
                   name: 'Sophie B.',
@@ -561,24 +606,25 @@ export default function Home() {
                 {
                   name: 'Mathilde L.',
                   rating: 5,
-                  comment: 'Conseiller à l'écoute et échange très intéressant.',
+                  comment: "Conseiller à l'écoute et échange très intéressant.",
                   date: '07/03/2025'
                 }
               ].map((review, index) => (
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="bg-white p-6 rounded-xl shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                  className="bg-gradient-to-br from-white to-blue-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  <div className="flex text-yellow-400 mb-2">
+                  <div className="flex text-yellow-400 mb-4">
                     {[...Array(review.rating)].map((_, i) => (
-                      <FaStar key={i} />
+                      <FaStar key={i} className="w-6 h-6" />
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-4">{review.comment}</p>
-                  <div className="flex justify-between text-sm text-gray-500">
-                    <p>{review.name}</p>
-                    <p>{review.date}</p>
+                  <p className="text-gray-700 mb-6 text-lg italic">{review.comment}</p>
+                  <div className="flex justify-between items-center text-sm">
+                    <p className="font-semibold text-blue-600">{review.name}</p>
+                    <p className="text-gray-500">{review.date}</p>
                   </div>
                 </motion.div>
               ))}
