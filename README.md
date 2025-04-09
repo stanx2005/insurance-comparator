@@ -1,4 +1,80 @@
-# Insurance Comparator Project
+# Insurance Comparator
+
+A modern web application for comparing health insurance offers from various French insurance companies. Built with Next.js and styled with Tailwind CSS.
+
+## Features
+
+- Compare health insurance offers from major French insurance companies
+- View detailed coverage levels and monthly prices
+- Interactive user interface with loading animations
+- Responsive design for all devices
+- Special labels for promotional offers and excellence awards
+
+## Insurance Companies Featured
+
+- MGEN
+- Harmonie Mutuelle
+- Malakoff Humanis
+- AG2R La Mondiale
+- AXA
+- Swiss Life
+- Allianz
+- MAAF
+- GMF
+- MACIF
+- Generali
+- April
+
+## Tech Stack
+
+- Next.js 14
+- React
+- TypeScript
+- Tailwind CSS
+- Node.js
+
+## Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/stanx2005/insurance-comparator.git
+   ```
+
+2. Navigate to the frontend directory:
+   ```bash
+   cd insurance-comparator/frontend
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+
+## Project Structure
+
+- `/frontend` - Next.js frontend application
+- `/frontend/public` - Static assets including company logos
+- `/frontend/src/app` - Application routes and components
+- `/frontend/src/components` - Reusable React components
+
+## Deployment
+
+The application is deployed on Vercel. Visit [Live Demo](#) to see it in action.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.
 
 ## Current Development State
 
