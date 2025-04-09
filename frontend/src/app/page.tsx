@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FaArrowRight, FaShieldAlt, FaEuroSign, FaUserFriends, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa'
+import { FaArrowRight, FaShieldAlt, FaEuroSign, FaUserFriends, FaFacebook, FaTwitter, FaLinkedin, FaStar } from 'react-icons/fa'
 import Partners from '@/components/Partners'
 
 const containerVariants = {
@@ -34,13 +34,102 @@ export default function Home() {
   const router = useRouter()
   const [isVisible, setIsVisible] = useState(false)
 
+  const priceData = {
+    age: [
+      { range: '16-25 ans', price: '50,82 €' },
+      { range: '26-35 ans', price: '64,01 €' },
+      { range: '36-49 ans', price: '79,52 €' },
+      { range: '50-55 ans', price: '97,71 €' },
+      { range: '56-65 ans', price: '114,93 €' },
+      { range: '66-120 ans', price: '133,23 €' }
+    ],
+    location: [
+      { dept: 'Paris (75)', price: '128,22 €' },
+      { dept: 'Bouches-du-Rhône (13)', price: '137,21 €' },
+      { dept: 'Nord (59)', price: '137,30 €' },
+      { dept: 'Loire-Atlantique (44)', price: '120,87 €' },
+      { dept: 'Ille-et-Vilaine (35)', price: '111,76 €' },
+      { dept: 'Moselle (57)', price: '114,79 €' }
+    ]
+  }
+
+  const reviews = [
+    {
+      name: 'Sophie B.',
+      rating: 5,
+      comment: 'Excellent service, conseillère au top. Agréable et professionnelle.',
+      date: '07/03/2024'
+    },
+    {
+      name: 'François R.',
+      rating: 5,
+      comment: 'Renseignements clairs, très bonne comparaison des offres.',
+      date: '08/03/2024'
+    },
+    {
+      name: 'Mathilde L.',
+      rating: 5,
+      comment: "Conseiller à l'écoute et échange très intéressant.",
+      date: '07/03/2024'
+    }
+  ]
+
+  // Add helper component for the help tooltip
+  const HelpTooltip = ({ content }: { content: { title: string; descriptions: { label: string; value: string }[] } }) => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    return (
+      <div className="relative inline-block">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="ml-2 text-gray-400 hover:text-gray-600"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M12 21a9 9 0 100-18 9 9 0 000 18z" />
+          </svg>
+        </button>
+
+        {isOpen && (
+          <div className="absolute z-50 w-96 p-4 mt-2 bg-white rounded-lg shadow-xl border border-gray-200">
+            <div className="flex justify-between items-start mb-4">
+              <h4 className="font-semibold text-secondary">{content.title}</h4>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="space-y-4">
+              {content.descriptions.map((desc, index) => (
+                <div key={index} className="space-y-2">
+                  <p className="font-medium text-gray-700">{desc.label}</p>
+                  <p className="text-gray-600 text-sm">{desc.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <span className="text-xl font-bold text-primary">AssuranceComparateur</span>
+              <Image 
+                src="/logo.png" 
+                alt="Optisanté" 
+                width={40} 
+                height={40} 
+                className="mr-2"
+              />
+              <span className="text-xl font-bold text-primary">Optisanté</span>
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <Link href="#features" className="nav-link">Fonctionnalités</Link>
@@ -82,7 +171,14 @@ export default function Home() {
               </div>
             </motion.div>
             <motion.div variants={itemVariants} className="relative animate-float">
-              <div className="w-full h-[400px] bg-primary/10 rounded-lg"></div>
+              <Image
+                src="/images/hero-image.jpg"
+                alt="Comparateur d'assurance santé"
+                width={600}
+                height={400}
+                className="rounded-lg shadow-xl object-cover"
+                priority
+              />
             </motion.div>
           </motion.div>
         </section>
@@ -124,6 +220,116 @@ export default function Home() {
                 <h3 className="text-xl font-semibold mb-2">Accompagnement</h3>
                 <p className="text-gray-600">Des experts à votre écoute</p>
               </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing Section */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-16"
+            >
+              {/* Prix selon l'âge */}
+              <div>
+                <h2 className="section-title text-center mb-12">Prix de la mutuelle selon l'âge</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {priceData.age.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      variants={itemVariants}
+                      className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+                    >
+                      <p className="text-lg font-medium text-gray-800 mb-2">{item.range}</p>
+                      <p className="text-3xl font-bold text-primary">{item.price}</p>
+                      <p className="text-sm text-gray-500 mt-1">par mois</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Prix selon le département */}
+              <div>
+                <h2 className="section-title text-center mb-12">Prix de la mutuelle selon le département</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {priceData.location.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      variants={itemVariants}
+                      className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+                    >
+                      <p className="text-lg font-medium text-gray-800 mb-2">{item.dept}</p>
+                      <p className="text-3xl font-bold text-primary">{item.price}</p>
+                      <p className="text-sm text-gray-500 mt-1">par mois</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Help Section */}
+              <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-100">
+                <div className="flex items-start justify-between mb-6">
+                  <h3 className="text-2xl font-semibold text-gray-900">Besoin d'aide ?</h3>
+                  <HelpTooltip
+                    content={{
+                      title: "Comment sont calculés nos prix ?",
+                      descriptions: [
+                        {
+                          label: "Données actualisées",
+                          value: "Nos prix sont mis à jour quotidiennement en fonction des offres de nos partenaires."
+                        },
+                        {
+                          label: "Facteurs de calcul",
+                          value: "Les tarifs varient selon l'âge, la localisation, le régime social et le niveau de couverture souhaité."
+                        }
+                      ]
+                    }}
+                  />
+                </div>
+                <p className="text-gray-600 mb-4">
+                  Nos experts sont disponibles pour vous guider dans votre choix de mutuelle santé.
+                </p>
+                <button className="btn-primary">Contactez-nous</button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Reviews Section */}
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-center mb-12"
+            >
+              <h2 className="section-title">Ce que disent nos clients</h2>
+              <p className="text-xl text-gray-600">Des milliers de personnes nous font confiance</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {reviews.map((review, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="flex text-yellow-400 mb-4">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <FaStar key={i} className="w-5 h-5" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-4">{review.comment}</p>
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold text-gray-900">{review.name}</p>
+                    <p className="text-sm text-gray-500">{review.date}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
@@ -188,7 +394,7 @@ export default function Home() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Contact</h3>
               <ul className="space-y-2">
-                <li className="text-gray-600">contact@assurancecomparateur.fr</li>
+                <li className="text-gray-600">contact@optisante.org</li>
                 <li className="text-gray-600">01 23 45 67 89</li>
               </ul>
             </div>
