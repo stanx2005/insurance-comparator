@@ -46,9 +46,16 @@ interface InsuranceSummaryPDFProps {
   formData: any
 }
 
+type CoverageLevel = 'minimum' | 'moyen' | 'fort' | 'maximum';
+
 const getCoverageLevelWidth = (level: string) => {
-  const levels = { minimum: 0.25, moyen: 0.5, fort: 0.75, maximum: 1 }
-  return `${(levels[level] || 0.25) * 100}%`
+  const levels: Record<CoverageLevel, number> = {
+    minimum: 0.25,
+    moyen: 0.5,
+    fort: 0.75,
+    maximum: 1
+  }
+  return `${(levels[level as CoverageLevel] || 0.25) * 100}%`
 }
 
 const InsuranceSummaryPDF = ({ formData }: InsuranceSummaryPDFProps) => {
