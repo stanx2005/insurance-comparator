@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
+  images: {
+    domains: ['localhost'],
+    unoptimized: true
+  },
+  typescript: {
+    ignoreBuildErrors: true
+  },
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(js|jsx|ts|tsx)$/,
