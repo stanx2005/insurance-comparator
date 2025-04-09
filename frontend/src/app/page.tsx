@@ -278,7 +278,7 @@ export default function Home() {
         <meta property="og:description" content="Comparez les meilleures assurances santé en France. Trouvez la mutuelle adaptée à vos besoins et votre budget." />
         <meta property="og:type" content="website" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://optisante.com" />
+        <link rel="canonical" href="https://optisante.org" />
       </Head>
 
       <main className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">

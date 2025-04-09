@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://optisante.com',
+    canonical: 'https://optisante.org',
   },
 }
 
