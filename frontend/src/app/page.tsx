@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import Head from 'next/head'
 
 type CoverageType = 'personalized' | 'minimal' | 'balanced' | 'maximal'
 type CoverageLevels = {
@@ -268,1317 +270,166 @@ export default function Home() {
 
   return (
     <>
-      <StepIndicator />
-      <ExitPrompt />
-      
-      <main className="min-h-screen bg-gray-50 pt-32 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-primary mb-4">
-              Devis mutuelle santé
-            </h1>
-            <p className="text-xl text-gray-600 mb-2">
-              Adhérents
-            </p>
-            <p className="text-lg text-gray-600">
-              En seulement 2 minutes, comparez les meilleurs devis mutuelle du marché !
-            </p>
+      <Head>
+        <title>Optisanté - Comparateur d'Assurance Santé en France</title>
+        <meta name="description" content="Comparez les meilleures assurances santé en France. Trouvez la mutuelle adaptée à vos besoins et votre budget. Devis gratuit et personnalisé." />
+        <meta name="keywords" content="assurance santé, mutuelle santé, comparateur mutuelle, devis mutuelle, assurance maladie, complémentaire santé, France" />
+        <meta property="og:title" content="Optisanté - Comparateur d'Assurance Santé en France" />
+        <meta property="og:description" content="Comparez les meilleures assurances santé en France. Trouvez la mutuelle adaptée à vos besoins et votre budget." />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://optisante.com" />
+      </Head>
+
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+        <nav className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex-shrink-0">
+                <Image
+                  src="/images/logo.png"
+                  alt="Optisanté"
+                  width={180}
+                  height={40}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                <a href="#" className="text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                  Opt'Insurance
+                </a>
+                <a href="#features" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                  Comparison
+                </a>
+                <a href="#features" className="text-gray-500 hover:text-gray-900 inline-flex items-center px-1 pt-1 text-sm font-medium">
+                  Features
+                </a>
+              </div>
+              <div>
+                <Link
+                  href="/calculator"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                >
+                  Optisanté
+                </Link>
+              </div>
+            </div>
           </div>
+        </nav>
 
-          {/* Form Cards */}
-          <div className="space-y-6">
-            {step === 1 && (
-              <div className="space-y-6">
-                <div className="card">
-                  <h2 className="text-2xl font-semibold text-secondary mb-6">Qui souhaitez-vous assurer ?</h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[
-                      { id: 'single', label: 'Un adulte' },
-                      { id: 'single_children', label: 'Un adulte + enfant(s)' },
-                      { id: 'couple', label: 'Un couple' },
-                      { id: 'couple_children', label: 'Un couple + enfant(s)' }
-                    ].map((option) => (
-                      <button
-                        key={option.id}
-                        onClick={() => setFormData(prev => ({ ...prev, insuranceType: option.id }))}
-                        className={`p-4 border-2 rounded-lg text-left ${
-                          formData.insuranceType === option.id
-                            ? 'border-primary bg-primary/5 text-primary'
-                            : 'border-gray-200 hover:border-primary/50'
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {formData.insuranceType && (
-                  <div className="card">
-                    <h2 className="text-2xl font-semibold text-secondary mb-6">
-                      Commençons par votre profil, vous êtes
-                    </h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {[
-                        { id: 'male', label: 'Un homme', icon: '👨' },
-                        { id: 'female', label: 'Une femme', icon: '👩' }
-                      ].map((option) => (
-                        <button
-                          key={option.id}
-                          onClick={() => setFormData(prev => ({ ...prev, gender: option.id }))}
-                          className={`p-6 border-2 rounded-lg flex items-center space-x-4 ${
-                            formData.gender === option.id
-                              ? 'border-primary bg-primary/5 text-primary'
-                              : 'border-gray-200 hover:border-primary/50'
-                          }`}
-                        >
-                          <span className="text-3xl">{option.icon}</span>
-                          <span className="text-lg">{option.label}</span>
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="mt-4 bg-gray-50 p-4 rounded-lg">
-                      <h3 className="font-semibold mb-2">Pourquoi cette question ?</h3>
-                      <p className="text-gray-600">
-                        Les assureurs ont besoin de cette information pour établir votre dossier.
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {formData.gender && (
-                  <div className="card">
-                    <h2 className="text-2xl font-semibold text-secondary mb-6">Votre Profil</h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="form-group">
-                        <label className="form-label">Date de naissance</label>
-                        <input
-                          type="date"
-                          name="birthDate"
-                          value={formData.birthDate}
-                          onChange={handleInputChange}
-                          className="form-input"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Profession ou activité</label>
-                        <select 
-                          name="profession" 
-                          value={formData.profession}
-                          onChange={handleInputChange}
-                          className="form-select"
-                        >
-                          <option value="">Sélectionnez</option>
-                          <option value="salarie">Salarié(e) non-cadre</option>
-                          <option value="recherche">Recherche d'emploi</option>
-                          <option value="retraite">Retraité(e)</option>
-                          <option value="sans">Sans profession</option>
-                          <option value="autre">Autres professions</option>
-                        </select>
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Régime social</label>
-                        <select 
-                          name="regime" 
-                          value={formData.regime}
-                          onChange={handleInputChange}
-                          className="form-select"
-                        >
-                          <option value="">Sélectionnez</option>
-                          <option value="general">Général</option>
-                          <option value="tns">Travailleur Non Salarié (TNS)</option>
-                          <option value="agricole">Agricole</option>
-                          <option value="alsace-moselle">Alsace-Moselle</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Show second person form if couple is selected */}
-                {(formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children') && 
-                 formData.birthDate && formData.profession && formData.regime && (
-                  <div className="card">
-                    <h2 className="text-2xl font-semibold text-secondary mb-6">
-                      Passons à votre conjoint(e), {formData.gender === 'male' ? 'il' : 'elle'} est
-                    </h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {[
-                        { id: 'male', label: 'Un homme', icon: '👨' },
-                        { id: 'female', label: 'Une femme', icon: '👩' }
-                      ].map((option) => (
-                        <button
-                          key={option.id}
-                          onClick={() => setFormData(prev => ({ ...prev, secondPersonGender: option.id }))}
-                          className={`p-6 border-2 rounded-lg flex items-center space-x-4 ${
-                            formData.secondPersonGender === option.id
-                              ? 'border-primary bg-primary/5 text-primary'
-                              : 'border-gray-200 hover:border-primary/50'
-                          }`}
-                        >
-                          <span className="text-3xl">{option.icon}</span>
-                          <span className="text-lg">{option.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Show second person details form */}
-                {(formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children') && 
-                 formData.secondPersonGender && (
-                  <div className="card">
-                    <h2 className="text-2xl font-semibold text-secondary mb-6">
-                      Informations de votre conjoint(e)
-                    </h2>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="form-group">
-                        <label className="form-label">Nom</label>
-                        <input
-                          type="text"
-                          name="secondPersonLastName"
-                          value={formData.secondPersonLastName}
-                          onChange={handleInputChange}
-                          className="form-input"
-                          placeholder="Nom"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Prénom</label>
-                        <input
-                          type="text"
-                          name="secondPersonFirstName"
-                          value={formData.secondPersonFirstName}
-                          onChange={handleInputChange}
-                          className="form-input"
-                          placeholder="Prénom"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Date de naissance</label>
-                        <input
-                          type="date"
-                          name="secondPersonBirthDate"
-                          value={formData.secondPersonBirthDate}
-                          onChange={handleInputChange}
-                          className="form-input"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Profession ou activité</label>
-                        <select 
-                          name="secondPersonProfession" 
-                          value={formData.secondPersonProfession}
-                          onChange={handleInputChange}
-                          className="form-select"
-                        >
-                          <option value="">Sélectionnez</option>
-                          <option value="salarie">Salarié(e) non-cadre</option>
-                          <option value="recherche">Recherche d'emploi</option>
-                          <option value="retraite">Retraité(e)</option>
-                          <option value="sans">Sans profession</option>
-                          <option value="autre">Autres professions</option>
-                        </select>
-                      </div>
-
-                      <div className="form-group">
-                        <label className="form-label">Régime social</label>
-                        <select 
-                          name="secondPersonRegime" 
-                          value={formData.secondPersonRegime}
-                          onChange={handleInputChange}
-                          className="form-select"
-                        >
-                          <option value="">Sélectionnez</option>
-                          <option value="general">Général</option>
-                          <option value="tns">Travailleur Non Salarié (TNS)</option>
-                          <option value="agricole">Agricole</option>
-                          <option value="alsace-moselle">Alsace-Moselle</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Show summary of both persons' information */}
-                {(formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children') && 
-                 formData.secondPersonBirthDate && formData.secondPersonProfession && formData.secondPersonRegime && (
-                  <div className="card">
-                    <h2 className="text-2xl font-semibold text-secondary mb-6">Les adhérents</h2>
-                    
-                    <div className="space-y-6">
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">Vous</h3>
-                        <p>Né(e) le {formData.birthDate}</p>
-                        <p>{formData.profession}</p>
-                        <p>{formData.regime}</p>
-                      </div>
-
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-semibold mb-2">Votre conjoint</h3>
-                        <p>Né(e) le {formData.secondPersonBirthDate}</p>
-                        <p>{formData.secondPersonProfession}</p>
-                        <p>{formData.secondPersonRegime}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Info Box */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                  <h3 className="font-semibold text-secondary mb-3">
-                    Qu'est-ce qu'un devis de mutuelle santé ?
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    Un devis de mutuelle santé estime le prix d'une assurance santé. Il contient les garanties ainsi que les niveaux de remboursement par poste de soins.
-                  </p>
-                  <p className="text-gray-600">
-                    C'est une étape essentielle avant la signature d'un contrat de mutuelle. Il vous donne l'occasion de bien réfléchir sur vos besoins en matière de santé. Par ailleurs, un devis est sans engagement !
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="space-y-6">
-                <div className="card">
-                  <h2 className="text-2xl font-semibold text-secondary mb-6">Votre régime Social</h2>
-                  
-                  <div className="grid grid-cols-1 gap-4">
-                    {[
-                      { id: 'general', label: 'Général' },
-                      { id: 'tns', label: 'Travailleur Non Salarié (TNS)' },
-                      { id: 'agricole', label: 'Agricole' },
-                      { id: 'alsace-moselle', label: 'Alsace-Moselle' }
-                    ].map((option) => (
-                      <button
-                        key={option.id}
-                        onClick={() => setFormData(prev => ({ ...prev, regime: option.id }))}
-                        className={`p-6 border-2 rounded-lg text-left transition-colors ${
-                          formData.regime === option.id
-                            ? 'border-primary bg-primary/5 text-primary'
-                            : 'border-gray-200 hover:border-primary/50'
-                        }`}
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                    <h3 className="font-semibold text-secondary mb-4">Aide</h3>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium mb-2">Le régime général</h4>
-                        <p className="text-gray-600">
-                          Il concerne les salariés du secteur privés ainsi que les travailleurs indépendants, les retraités, étudiants et sans profession.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-medium mb-2">Le régime agricole</h4>
-                        <p className="text-gray-600">
-                          Il accompagne les exploitants, les salariés agricoles et les entreprises agricoles.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-medium mb-2">Le régime Alsace-Moselle</h4>
-                        <p className="text-gray-600">
-                          Il verse à ses bénéficiaires un complément de remboursement, en plus de ce que le régime de base de la Sécurité Sociale prend en charge.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                    <h3 className="font-semibold text-secondary mb-3">
-                      Pourquoi cette information est importante ?
-                    </h3>
-                    <p className="text-gray-600">
-                      Votre régime social détermine vos droits et le niveau de remboursement de base de la Sécurité sociale. Cette information est essentielle pour calculer précisément vos remboursements complémentaires.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {step === 3 && (
-              <div className="space-y-6">
-                <div className="card">
-                  <h2 className="text-2xl font-semibold text-secondary mb-6">Contrat</h2>
-                  
-                  <div className="space-y-6">
-                    <div className="form-group">
-                      <label className="form-label">Quel est le code postal ou la ville de votre foyer ?</label>
-                      <input
-                        type="text"
-                        name="postalCode"
-                        value={formData.postalCode}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="Code postal ou ville"
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <h3 className="text-lg font-semibold mb-4">Etes-vous assuré(e) actuellement ?</h3>
-                      <p className="text-sm text-gray-600 mb-4">Cette question concerne l'adhérent principal</p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {[
-                          { id: 'yes', label: 'Oui' },
-                          { id: 'no', label: 'Non' }
-                        ].map((option) => (
-                          <button
-                            key={option.id}
-                            onClick={() => setFormData(prev => ({ ...prev, isCurrentlyInsured: option.id }))}
-                            className={`p-4 border-2 rounded-lg text-left ${
-                              formData.isCurrentlyInsured === option.id
-                                ? 'border-primary bg-primary/5 text-primary'
-                                : 'border-gray-200 hover:border-primary/50'
-                            }`}
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {formData.isCurrentlyInsured === 'yes' && (
-                      <div className="form-group">
-                        <label className="form-label">Mois d'échéance du contrat</label>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                          {getNextMonths().nextMonths.map((month) => (
-                            <button
-                              key={month}
-                              onClick={() => setFormData(prev => ({ ...prev, contractEndMonth: month }))}
-                              className={`p-4 border-2 rounded-lg text-left ${
-                                formData.contractEndMonth === month
-                                  ? 'border-primary bg-primary/5 text-primary'
-                                  : 'border-gray-200 hover:border-primary/50'
-                              }`}
-                            >
-                              {month}
-                            </button>
-                          ))}
-                          <div className="relative group">
-                            <button
-                              onClick={() => {/* Show month selector */}}
-                              className="p-4 border-2 border-gray-200 rounded-lg text-left w-full hover:border-primary/50"
-                            >
-                              Autre mois...
-                            </button>
-                            <div className="hidden group-hover:block absolute z-10 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
-                              {getNextMonths().allMonths.map((month) => (
-                                <button
-                                  key={month}
-                                  onClick={() => setFormData(prev => ({ ...prev, contractEndMonth: month }))}
-                                  className="block w-full px-4 py-2 text-left hover:bg-gray-50"
-                                >
-                                  {month}
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {formData.isCurrentlyInsured === 'no' && (
-                      <div className="form-group">
-                        <label className="form-label">A quelle date souhaitez-vous être assuré(e) ?</label>
-                        <div className="space-y-4">
-                          {[
-                            { id: 'today', label: `Aujourd'hui - ${getFormattedDates().today.fullDate}` },
-                            { id: 'tomorrow', label: `Demain - ${getFormattedDates().tomorrow.fullDate}` },
-                            { id: 'nextWeek', label: `Dans une semaine - ${getFormattedDates().nextWeek.fullDate}` },
-                            { id: 'nextMonth', label: `Dans un mois - ${getFormattedDates().nextMonth.fullDate}` },
-                            { id: 'other', label: 'Une autre date' }
-                          ].map((option) => (
-                            <button
-                              key={option.id}
-                              onClick={() => setFormData(prev => ({ ...prev, desiredStartDate: option.id }))}
-                              className={`w-full p-4 border-2 rounded-lg text-left ${
-                                formData.desiredStartDate === option.id
-                                  ? 'border-primary bg-primary/5 text-primary'
-                                  : 'border-gray-200 hover:border-primary/50'
-                              }`}
-                            >
-                              {option.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Info Box */}
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                      <h3 className="font-semibold text-secondary mb-4">À savoir</h3>
-                      <div className="space-y-4 text-gray-600">
-                        <p>
-                          Si vous ou votre conjoint bénéficiez d'une mutuelle d'entreprise obligatoire, assurez-vous également de pouvoir vous en dispenser.
-                        </p>
-                        <p>
-                          De même, notez bien que votre nouvel assureur ne se chargera de la résiliation que d'un des deux contrats.
-                          Vous devrez résilier par vous-même le contrat de votre conjoint, et ce à la même date afin d'éviter tout doublon de couverture.
-                        </p>
-                        <p>
-                          Enfin, si vous êtes éligible à la Complémentaire Santé Solidaire, sachez qu'elle n'est pas acceptée par tous les assureurs.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {step === 4 && (
-              <div className="space-y-6">
-                <div className="card">
-                  <h2 className="text-2xl font-semibold text-secondary mb-6">Je souhaite une couverture...</h2>
-                  
-                  <div className="space-y-6">
-                    {/* Personalized Option */}
-                    <button
-                      onClick={() => setFormData(prev => ({ ...prev, coverageType: 'personalized' }))}
-                      className={`w-full p-6 border-2 rounded-lg text-left ${
-                        formData.coverageType === 'personalized'
-                          ? 'border-primary bg-primary/5 text-primary'
-                          : 'border-gray-200 hover:border-primary/50'
-                      }`}
-                    >
-                      <div className="flex flex-col">
-                        <span className="text-lg font-semibold text-primary mb-2">Personnalisée</span>
-                        <span className="text-gray-600">pour choisir mes besoins sur chaque poste de soins</span>
-                      </div>
-                    </button>
-
-                    {formData.coverageType === 'personalized' ? (
-                      <div className="mt-6 space-y-8">
-                        <div>
-                          <div className="flex items-center mb-4">
-                            <h3 className="text-lg font-semibold text-secondary">Soins médicaux</h3>
-                            <HelpTooltip content={{
-                              title: "Comment choisir vos besoins en soins médicaux ?",
-                              descriptions: [
-                                {
-                                  label: "Certains généralistes et spécialistes pratiquent des dépassements d'honoraires, c'est-à-dire que leurs honoraires excèdent les tarifs réglementés fixés par la sécurité sociale. Pour choisir, évaluez la fréquence et l'importance des dépassements des médecins que vous consultez.",
-                                  value: ""
-                                },
-                                {
-                                  label: "Pas de dépassement d'honoraires",
-                                  value: "jusqu'à 100% de la base de remboursement"
-                                },
-                                {
-                                  label: "Dépassements d'honoraires très légers",
-                                  value: "jusqu'à 125% de la base de remboursement"
-                                },
-                                {
-                                  label: "Dépassements d'honoraires modérés",
-                                  value: "autour de 150% de la base de remboursement"
-                                },
-                                {
-                                  label: "Dépassements d'honoraires élevés",
-                                  value: "200% ou plus de la base de remboursement"
-                                }
-                              ]
-                            }} />
-                          </div>
-
-                          <div className="space-y-6">
-                            {[
-                              {
-                                id: 'minimum',
-                                title: 'Minimum',
-                                description: "Pas de dépassement d'honoraires",
-                                value: 1
-                              },
-                              {
-                                id: 'moyen',
-                                title: 'Moyen',
-                                description: "Dépassements d'honoraires très légers",
-                                value: 2
-                              },
-                              {
-                                id: 'fort',
-                                title: 'Fort',
-                                description: "Dépassements d'honoraires modérés",
-                                value: 3
-                              },
-                              {
-                                id: 'maximum',
-                                title: 'Maximum',
-                                description: "Dépassements d'honoraires élevés",
-                                value: 4
-                              }
-                            ].map((option) => (
-                              <div key={option.id} className="relative">
-                                <button
-                                  onClick={() => setFormData(prev => ({
-                                    ...prev,
-                                    personalizedCoverage: {
-                                      ...prev.personalizedCoverage,
-                                      soinsMedicaux: option.id as MedicalCareLevel
-                                    }
-                                  }))}
-                                  className={`w-full p-4 hover:bg-gray-50 rounded-lg transition-colors ${
-                                    formData.personalizedCoverage.soinsMedicaux === option.id
-                                      ? 'bg-primary/5'
-                                      : ''
-                                  }`}
-                                >
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h4 className={`font-semibold ${
-                                      formData.personalizedCoverage.soinsMedicaux === option.id
-                                        ? 'text-primary'
-                                        : 'text-secondary'
-                                    }`}>
-                                      {option.title}
-                                    </h4>
-                                    <div className="flex space-x-1">
-                                      {[...Array(4)].map((_, i) => (
-                                        <div
-                                          key={i}
-                                          className={`w-8 h-2 rounded ${
-                                            i < option.value
-                                              ? formData.personalizedCoverage.soinsMedicaux === option.id
-                                                ? 'bg-primary'
-                                                : 'bg-gray-400'
-                                              : 'bg-gray-200'
-                                          }`}
-                                        />
-                                      ))}
-                                    </div>
-                                  </div>
-                                  <p className="text-sm text-gray-600 text-left">{option.description}</p>
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Hospitalisation Section */}
-                        <div>
-                          <div className="flex items-center mb-4">
-                            <h3 className="text-lg font-semibold text-secondary">Hospitalisation</h3>
-                            <HelpTooltip content={{
-                              title: "Comment choisir vos besoins en hospitalisation ?",
-                              descriptions: [
-                                {
-                                  label: "Les dépassements d'honoraires sont fréquents en hospitalisation, notamment pour la chirurgie. Le choix de votre niveau de couverture dépendra de vos antécédents médicaux et de vos préférences concernant le confort hospitalier.",
-                                  value: ""
-                                },
-                                {
-                                  label: "Minimum",
-                                  value: "Chambre double, pas de dépassements d'honoraires (100% BR)"
-                                },
-                                {
-                                  label: "Moyen",
-                                  value: "Chambre particulière, dépassements modérés (150% BR)"
-                                },
-                                {
-                                  label: "Fort",
-                                  value: "Chambre particulière, dépassements importants (200% BR)"
-                                },
-                                {
-                                  label: "Maximum",
-                                  value: "Confort optimal, dépassements élevés (300% BR ou plus)"
-                                }
-                              ]
-                            }} />
-                          </div>
-
-                          <div className="space-y-6">
-                            {[
-                              {
-                                id: 'minimum',
-                                title: 'Minimum',
-                                description: "Chambre double, pas de dépassements d'honoraires",
-                                value: 1
-                              },
-                              {
-                                id: 'moyen',
-                                title: 'Moyen',
-                                description: "Chambre particulière, dépassements modérés",
-                                value: 2
-                              },
-                              {
-                                id: 'fort',
-                                title: 'Fort',
-                                description: "Chambre particulière, dépassements importants",
-                                value: 3
-                              },
-                              {
-                                id: 'maximum',
-                                title: 'Maximum',
-                                description: "Confort optimal, dépassements élevés",
-                                value: 4
-                              }
-                            ].map((option) => (
-                              <div key={option.id} className="relative">
-                                <button
-                                  onClick={() => setFormData(prev => ({
-                                    ...prev,
-                                    personalizedCoverage: {
-                                      ...prev.personalizedCoverage,
-                                      hospitalisation: option.id as MedicalCareLevel
-                                    }
-                                  }))}
-                                  className={`w-full p-4 hover:bg-gray-50 rounded-lg transition-colors ${
-                                    formData.personalizedCoverage.hospitalisation === option.id
-                                      ? 'bg-primary/5'
-                                      : ''
-                                  }`}
-                                >
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h4 className={`font-semibold ${
-                                      formData.personalizedCoverage.hospitalisation === option.id
-                                        ? 'text-primary'
-                                        : 'text-secondary'
-                                    }`}>
-                                      {option.title}
-                                    </h4>
-                                    <div className="flex space-x-1">
-                                      {[...Array(4)].map((_, i) => (
-                                        <div
-                                          key={i}
-                                          className={`w-8 h-2 rounded ${
-                                            i < option.value
-                                              ? formData.personalizedCoverage.hospitalisation === option.id
-                                                ? 'bg-primary'
-                                                : 'bg-gray-400'
-                                              : 'bg-gray-200'
-                                          }`}
-                                        />
-                                      ))}
-                                    </div>
-                                  </div>
-                                  <p className="text-sm text-gray-600 text-left">{option.description}</p>
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Optique Section */}
-                        <div>
-                          <div className="flex items-center mb-4">
-                            <h3 className="text-lg font-semibold text-secondary">Optique</h3>
-                            <HelpTooltip content={{
-                              title: "Comment choisir vos besoins en optique ?",
-                              descriptions: [
-                                {
-                                  label: "Le niveau de couverture optique dépend de votre correction et de vos besoins en équipement (verres progressifs, traitements spéciaux...).",
-                                  value: ""
-                                },
-                                {
-                                  label: "Minimum",
-                                  value: "Équipement simple, verres unifocaux (100% BR)"
-                                },
-                                {
-                                  label: "Moyen",
-                                  value: "Verres de marque, monture moyenne gamme (150-200% BR)"
-                                },
-                                {
-                                  label: "Fort",
-                                  value: "Verres progressifs, traitements spéciaux (250-300% BR)"
-                                },
-                                {
-                                  label: "Maximum",
-                                  value: "Équipement haut de gamme, verres sur-mesure (400% BR ou plus)"
-                                }
-                              ]
-                            }} />
-                          </div>
-
-                          <div className="space-y-6">
-                            {[
-                              {
-                                id: 'minimum',
-                                title: 'Minimum',
-                                description: "Équipement simple, verres unifocaux",
-                                value: 1
-                              },
-                              {
-                                id: 'moyen',
-                                title: 'Moyen',
-                                description: "Verres de marque, monture moyenne gamme",
-                                value: 2
-                              },
-                              {
-                                id: 'fort',
-                                title: 'Fort',
-                                description: "Verres progressifs, traitements spéciaux",
-                                value: 3
-                              },
-                              {
-                                id: 'maximum',
-                                title: 'Maximum',
-                                description: "Équipement haut de gamme, verres sur-mesure",
-                                value: 4
-                              }
-                            ].map((option) => (
-                              <div key={option.id} className="relative">
-                                <button
-                                  onClick={() => setFormData(prev => ({
-                                    ...prev,
-                                    personalizedCoverage: {
-                                      ...prev.personalizedCoverage,
-                                      optique: option.id as MedicalCareLevel
-                                    }
-                                  }))}
-                                  className={`w-full p-4 hover:bg-gray-50 rounded-lg transition-colors ${
-                                    formData.personalizedCoverage.optique === option.id
-                                      ? 'bg-primary/5'
-                                      : ''
-                                  }`}
-                                >
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h4 className={`font-semibold ${
-                                      formData.personalizedCoverage.optique === option.id
-                                        ? 'text-primary'
-                                        : 'text-secondary'
-                                    }`}>
-                                      {option.title}
-                                    </h4>
-                                    <div className="flex space-x-1">
-                                      {[...Array(4)].map((_, i) => (
-                                        <div
-                                          key={i}
-                                          className={`w-8 h-2 rounded ${
-                                            i < option.value
-                                              ? formData.personalizedCoverage.optique === option.id
-                                                ? 'bg-primary'
-                                                : 'bg-gray-400'
-                                              : 'bg-gray-200'
-                                          }`}
-                                        />
-                                      ))}
-                                    </div>
-                                  </div>
-                                  <p className="text-sm text-gray-600 text-left">{option.description}</p>
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Dentaire Section */}
-                        <div>
-                          <div className="flex items-center mb-4">
-                            <h3 className="text-lg font-semibold text-secondary">Dentaire</h3>
-                            <HelpTooltip content={{
-                              title: "Comment choisir vos besoins en dentaire ?",
-                              descriptions: [
-                                {
-                                  label: "Les soins dentaires peuvent être très coûteux, notamment pour les prothèses et l'implantologie. Votre choix dépendra de l'état de votre dentition et des soins prévus.",
-                                  value: ""
-                                },
-                                {
-                                  label: "Minimum",
-                                  value: "Soins courants et prothèses simples (100% BR)"
-                                },
-                                {
-                                  label: "Moyen",
-                                  value: "Prothèses de qualité moyenne (200% BR)"
-                                },
-                                {
-                                  label: "Fort",
-                                  value: "Couronnes et bridges de qualité (300% BR)"
-                                },
-                                {
-                                  label: "Maximum",
-                                  value: "Implants et prothèses haut de gamme (400% BR ou plus)"
-                                }
-                              ]
-                            }} />
-                          </div>
-
-                          <div className="space-y-6">
-                            {[
-                              {
-                                id: 'minimum',
-                                title: 'Minimum',
-                                description: "Soins courants et prothèses simples",
-                                value: 1
-                              },
-                              {
-                                id: 'moyen',
-                                title: 'Moyen',
-                                description: "Prothèses de qualité moyenne",
-                                value: 2
-                              },
-                              {
-                                id: 'fort',
-                                title: 'Fort',
-                                description: "Couronnes et bridges de qualité",
-                                value: 3
-                              },
-                              {
-                                id: 'maximum',
-                                title: 'Maximum',
-                                description: "Implants et prothèses haut de gamme",
-                                value: 4
-                              }
-                            ].map((option) => (
-                              <div key={option.id} className="relative">
-                                <button
-                                  onClick={() => setFormData(prev => ({
-                                    ...prev,
-                                    personalizedCoverage: {
-                                      ...prev.personalizedCoverage,
-                                      dentaire: option.id as MedicalCareLevel
-                                    }
-                                  }))}
-                                  className={`w-full p-4 hover:bg-gray-50 rounded-lg transition-colors ${
-                                    formData.personalizedCoverage.dentaire === option.id
-                                      ? 'bg-primary/5'
-                                      : ''
-                                  }`}
-                                >
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h4 className={`font-semibold ${
-                                      formData.personalizedCoverage.dentaire === option.id
-                                        ? 'text-primary'
-                                        : 'text-secondary'
-                                    }`}>
-                                      {option.title}
-                                    </h4>
-                                    <div className="flex space-x-1">
-                                      {[...Array(4)].map((_, i) => (
-                                        <div
-                                          key={i}
-                                          className={`w-8 h-2 rounded ${
-                                            i < option.value
-                                              ? formData.personalizedCoverage.dentaire === option.id
-                                                ? 'bg-primary'
-                                                : 'bg-gray-400'
-                                              : 'bg-gray-200'
-                                          }`}
-                                        />
-                                      ))}
-                                    </div>
-                                  </div>
-                                  <p className="text-sm text-gray-600 text-left">{option.description}</p>
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Auditif Section */}
-                        <div>
-                          <div className="flex items-center mb-4">
-                            <h3 className="text-lg font-semibold text-secondary">Auditif</h3>
-                            <HelpTooltip content={{
-                              title: "Comment choisir vos besoins en audioprothèses ?",
-                              descriptions: [
-                                {
-                                  label: "Les appareils auditifs représentent un investissement important. Le niveau de couverture dépendra de votre perte auditive et de vos besoins en équipement.",
-                                  value: ""
-                                },
-                                {
-                                  label: "Minimum",
-                                  value: "Appareils basiques (100% BR)"
-                                },
-                                {
-                                  label: "Moyen",
-                                  value: "Appareils de moyenne gamme (200% BR)"
-                                },
-                                {
-                                  label: "Fort",
-                                  value: "Appareils sophistiqués (300% BR)"
-                                },
-                                {
-                                  label: "Maximum",
-                                  value: "Appareils haut de gamme (400% BR ou plus)"
-                                }
-                              ]
-                            }} />
-                          </div>
-
-                          <div className="space-y-6">
-                            {[
-                              {
-                                id: 'minimum',
-                                title: 'Minimum',
-                                description: "Appareils basiques",
-                                value: 1
-                              },
-                              {
-                                id: 'moyen',
-                                title: 'Moyen',
-                                description: "Appareils de moyenne gamme",
-                                value: 2
-                              },
-                              {
-                                id: 'fort',
-                                title: 'Fort',
-                                description: "Appareils sophistiqués",
-                                value: 3
-                              },
-                              {
-                                id: 'maximum',
-                                title: 'Maximum',
-                                description: "Appareils haut de gamme",
-                                value: 4
-                              }
-                            ].map((option) => (
-                              <div key={option.id} className="relative">
-                                <button
-                                  onClick={() => setFormData(prev => ({
-                                    ...prev,
-                                    personalizedCoverage: {
-                                      ...prev.personalizedCoverage,
-                                      auditif: option.id as MedicalCareLevel
-                                    }
-                                  }))}
-                                  className={`w-full p-4 hover:bg-gray-50 rounded-lg transition-colors ${
-                                    formData.personalizedCoverage.auditif === option.id
-                                      ? 'bg-primary/5'
-                                      : ''
-                                  }`}
-                                >
-                                  <div className="flex items-center justify-between mb-2">
-                                    <h4 className={`font-semibold ${
-                                      formData.personalizedCoverage.auditif === option.id
-                                        ? 'text-primary'
-                                        : 'text-secondary'
-                                    }`}>
-                                      {option.title}
-                                    </h4>
-                                    <div className="flex space-x-1">
-                                      {[...Array(4)].map((_, i) => (
-                                        <div
-                                          key={i}
-                                          className={`w-8 h-2 rounded ${
-                                            i < option.value
-                                              ? formData.personalizedCoverage.auditif === option.id
-                                                ? 'bg-primary'
-                                                : 'bg-gray-400'
-                                              : 'bg-gray-200'
-                                          }`}
-                                        />
-                                      ))}
-                                    </div>
-                                  </div>
-                                  <p className="text-sm text-gray-600 text-left">{option.description}</p>
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="text-center text-gray-500 font-medium">Ou</div>
-
-                        {/* Predefined Options */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                          {[
-                            {
-                              id: 'minimal' as CoverageType,
-                              title: 'Minimale',
-                              description: 'pour obtenir les meilleurs prix',
-                              levels: {
-                                soinsCourants: 1,
-                                hospitalisation: 1,
-                                optique: 1,
-                                dentaire: 1,
-                                auditif: 1
-                              } as CoverageLevels
-                            },
-                            {
-                              id: 'balanced' as CoverageType,
-                              title: 'Equilibrée',
-                              description: 'pour maitriser mon budget',
-                              levels: {
-                                soinsCourants: 2,
-                                hospitalisation: 2,
-                                optique: 2,
-                                dentaire: 2,
-                                auditif: 2
-                              } as CoverageLevels
-                            },
-                            {
-                              id: 'maximal' as CoverageType,
-                              title: 'Maximale',
-                              description: 'pour réduire mon reste à charge',
-                              levels: {
-                                soinsCourants: 4,
-                                hospitalisation: 4,
-                                optique: 3,
-                                dentaire: 3,
-                                auditif: 3
-                              } as CoverageLevels
-                            }
-                          ].map((option) => (
-                            <button
-                              key={option.id}
-                              onClick={() => setFormData(prev => ({
-                                ...prev,
-                                coverageType: option.id,
-                                coverageLevels: option.levels
-                              }))}
-                              className={`flex flex-col h-full p-6 border-2 rounded-lg ${
-                                formData.coverageType === option.id
-                                  ? 'border-primary bg-primary/5'
-                                  : 'border-gray-200 hover:border-primary/50'
-                              }`}
-                            >
-                              <div className="mb-4">
-                                <h3 className={`text-lg font-semibold mb-2 ${
-                                  formData.coverageType === option.id ? 'text-primary' : 'text-secondary'
-                                }`}>
-                                  {option.title}
-                                </h3>
-                                <p className="text-gray-600 text-sm">{option.description}</p>
-                              </div>
-
-                              <div className="space-y-3 mt-auto">
-                                {[
-                                  { id: 'soinsCourants' as CoverageId, label: 'Soins courants' },
-                                  { id: 'hospitalisation' as CoverageId, label: 'Hospitalisation' },
-                                  { id: 'optique' as CoverageId, label: 'Optique' },
-                                  { id: 'dentaire' as CoverageId, label: 'Dentaire' },
-                                  { id: 'auditif' as CoverageId, label: 'Auditif' }
-                                ].map((coverage) => (
-                                  <div key={coverage.id} className="flex items-center">
-                                    <span className="text-gray-600 flex-1">{coverage.label}</span>
-                                    <div className="flex space-x-1">
-                                      {[...Array(4)].map((_, i) => (
-                                        <div
-                                          key={i}
-                                          className={`w-6 h-2 rounded ${
-                                            i < option.levels[coverage.id]
-                                              ? 'bg-primary'
-                                              : 'bg-gray-200'
-                                          }`}
-                                        />
-                                      ))}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </button>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
-
-                  {/* Info Box */}
-                  <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-gray-600">
-                      Nous chercherons des offres se rapprochant le plus possible du niveau de couverture que vous indiquez. 
-                      Vous pourrez à tout moment ajuster vos besoins sur la page de résultats.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {step === 5 && (
-              <div className="space-y-6">
-                <div className="card">
-                  <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-semibold">
-                      <span className="text-primary">Vous y êtes presque</span>, dernière étape avant vos résultats !
-                    </h2>
-                    <img 
-                      src="/illustration.png" 
-                      alt="Person with shield" 
-                      className="w-32 h-32"
-                    />
-                  </div>
-                  
-                  <div className="space-y-6">
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="Prénom"
-                      />
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="Nom"
-                      />
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="Email"
-                      />
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="Téléphone (10 chiffres)"
-                      />
-                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-3 mt-8">
-                      <input
-                        type="checkbox"
-                        name="acceptTerms"
-                        checked={formData.acceptTerms}
-                        onChange={handleInputChange}
-                        className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                      />
-                      <label className="text-sm text-gray-600">
-                        J'accepte les <a href="#" className="text-primary underline">conditions générales d'utilisation</a> et d'être rappelé par nos partenaires assureurs si je demande à être mis en relation.
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Info Box */}
-                <div className="bg-white border border-gray-200 rounded-lg p-6">
-                  <h3 className="text-lg font-semibold text-primary mb-4">Pourquoi ces infos ?</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <svg className="w-5 h-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <p className="text-gray-600">
-                        Recevez les meilleurs tarifs de votre comparaison par mail.
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <svg className="w-5 h-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <p className="text-gray-600">
-                        Retrouvez vos devis dans votre espace personnel.
-                      </p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <svg className="w-5 h-5 text-primary mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <p className="text-gray-600">
-                        Si vous le souhaitez, échangez avec un conseiller par téléphone
-                        <br />afin de trouver l'offre adaptée à vos besoins.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Submit Button */}
-                <button
-                  onClick={handleSubmit}
-                  className="w-full py-4 bg-primary text-white text-lg font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                <span className="block xl:inline">Health Insurance</span>{' '}
+                <span className="block text-blue-600 xl:inline">Comparison Features</span>
+              </h1>
+              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                Health Insurance comparison to your Health comparisons taped for to is your Wellness.
+              </p>
+              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left">
+                <Link
+                  href="/calculator"
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
                 >
-                  Accédez à vos devis
-                </button>
+                  Trouvez votre assurance optimale
+                </Link>
               </div>
-            )}
-
-            {/* Navigation Buttons */}
-            <div className="flex justify-between mt-8">
-              {step > 1 && (
-                <button
-                  onClick={prevStep}
-                  className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-                >
-                  Précédent
-                </button>
-              )}
-              <button
-                onClick={step === 5 ? handleSubmit : nextStep}
-                className="btn-primary ml-auto"
-              >
-                {step === 5 ? 'Voir les offres' : 'Suivant'}
-              </button>
+            </div>
+            <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+              <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                <div className="relative block w-full bg-gradient-to-r from-blue-400 via-green-300 to-blue-500 rounded-lg overflow-hidden">
+                  <div className="grid grid-cols-3 gap-4 p-8">
+                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
+                      <Image src="/images/heart.svg" alt="Health" width={40} height={40} />
+                    </div>
+                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
+                      <Image src="/images/medical.svg" alt="Medical" width={40} height={40} />
+                    </div>
+                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
+                      <Image src="/images/family.svg" alt="Family" width={40} height={40} />
+                    </div>
+                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
+                      <Image src="/images/dental.svg" alt="Dental" width={40} height={40} />
+                    </div>
+                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
+                      <Image src="/images/vision.svg" alt="Vision" width={40} height={40} />
+                    </div>
+                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
+                      <Image src="/images/wellness.svg" alt="Wellness" width={40} height={40} />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* FAQ Section */}
-        {step === 1 && (
-          <div className="mt-12 space-y-8">
-            <h2 className="text-2xl font-semibold text-secondary">Foire aux questions</h2>
-            
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold mb-2">Un devis mutuelle santé est-il sans engagement ?</h3>
-                <p className="text-gray-600">
-                  Comparer des mutuelles santé en ligne est 100 % gratuit et sans aucun engagement. Vous n'avez aucune obligation de souscrire aux contrats que l'on vous propose.
-                </p>
-              </div>
+        <section id="features" className="py-12 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="lg:text-center">
+              <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Features</h2>
+              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Une comparaison complète
+              </p>
+              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                Découvrez les avantages de notre comparateur d'assurance santé
+              </p>
+            </div>
 
-              <div>
-                <h3 className="font-semibold mb-2">Quelle mutuelle santé est la moins chère ?</h3>
-                <p className="text-gray-600">
-                  Parmi les trois mutuelles les moins chères, on peut citer MGC (à partir de 12 € par an), Mutuelle Bleue (à partir de 91 € par an) et Ociane (à partir de 103 € par an). Le prix varie selon l'âge, le lieu d'habitation et les garanties souscrites.
-                </p>
-              </div>
+            <div className="mt-10">
+              <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Comparaison rapide</h3>
+                    <p className="mt-2 text-base text-gray-500">
+                      Obtenez une comparaison instantanée des meilleures offres d'assurance santé.
+                    </p>
+                  </div>
+                </div>
 
-              <div>
-                <h3 className="font-semibold mb-2">Quelles sont les mutuelles qui remboursent le mieux ?</h3>
-                <p className="text-gray-600">
-                  Les mutuelles qui remboursent le mieux sont celles qui affichent un niveau de remboursement élevé. Pour être bien indemnisé, il est conseillé de se diriger vers une mutuelle avec des taux de remboursement supérieurs à 100 %.
-                </p>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Prix transparents</h3>
+                    <p className="mt-2 text-base text-gray-500">
+                      Des tarifs clairs et détaillés pour chaque offre d'assurance.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
+                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Couverture complète</h3>
+                    <p className="mt-2 text-base text-gray-500">
+                      Une analyse détaillée des garanties pour chaque contrat.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        )}
+        </section>
       </main>
     </>
   )

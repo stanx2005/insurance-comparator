@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://optisante.com/sitemap.xml 
