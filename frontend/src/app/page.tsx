@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
-import { FaArrowRight, FaChartLine, FaShieldAlt, FaEuroSign, FaUserFriends, FaSearch, FaStar, FaHospital, FaUserMd, FaClinicMedical, FaHeartbeat, FaPlus, FaCircle } from 'react-icons/fa'
+import { FaArrowRight, FaChartLine, FaShieldAlt, FaEuroSign, FaUserFriends, FaSearch, FaStar, FaHospital, FaUserMd, FaClinicMedical, FaHeartbeat, FaPlus, FaCircle, FaFacebook, FaTwitter, FaLinkedin } from 'react-icons/fa'
 import Partners from '@/components/Partners'
 
 type CoverageType = 'personalized' | 'minimal' | 'balanced' | 'maximal'
@@ -326,360 +326,189 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Head>
-        <title>Optisanté - Comparateur d'Assurance Santé en France</title>
-        <meta name="description" content="Comparez les meilleures assurances santé en France. Trouvez la mutuelle adaptée à vos besoins et votre budget. Devis gratuit et personnalisé." />
-        <meta name="keywords" content="assurance santé, mutuelle santé, comparateur mutuelle, devis mutuelle, assurance maladie, complémentaire santé, France" />
-        <meta property="og:title" content="Optisanté - Comparateur d'Assurance Santé en France" />
-        <meta property="og:description" content="Comparez les meilleures assurances santé en France. Trouvez la mutuelle adaptée à vos besoins et votre budget." />
-        <meta property="og:type" content="website" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://optisante.org" />
+        <title>Comparateur d'Assurance Santé | Trouvez la Meilleure Mutuelle</title>
+        <meta name="description" content="Comparez les meilleures mutuelles santé et trouvez l'assurance adaptée à vos besoins. Devis gratuit et personnalisé en quelques minutes." />
       </Head>
 
-      <main className="min-h-screen">
+      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16 items-center">
+            <div className="flex items-center">
+              <Image src="/logo.png" alt="Logo" width={40} height={40} className="mr-2" />
+              <span className="text-xl font-bold text-primary">AssuranceComparateur</span>
+            </div>
+            <div className="hidden md:flex items-center space-x-4">
+              <Link href="#features" className="nav-link">Fonctionnalités</Link>
+              <Link href="#partners" className="nav-link">Partenaires</Link>
+              <Link href="#contact" className="nav-link">Contact</Link>
+              <button className="btn-primary">Comparer maintenant</button>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main className="pt-20">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-white to-gray-50">
-          <div className="container mx-auto px-4 py-16 md:py-24">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <div className="w-64 h-24 relative mb-4">
-                    <Image
-                      src="/logos/logo.png"
-                      alt="Optisanté"
-                      fill
-                      className="object-contain"
-                      priority
-                    />
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-navy-800">
-                    Comparateur d&apos;Assurance Santé
-                  </h2>
-                </div>
-                <div className="space-y-4">
-                  <h3 className="text-2xl md:text-3xl font-bold text-navy-700">
-                    Comparez et trouvez la meilleure assurance santé
-                  </h3>
-                  <p className="text-xl text-gray-600">
-                    Trouvez la mutuelle adaptée à vos besoins et votre budget
-                  </p>
-                </div>
-                <button 
-                  onClick={() => router.push('/calculator')}
-                  className="bg-primary text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-primary-dark transition-colors flex items-center space-x-2"
-                >
-                  <span>Comparer maintenant</span>
-                  <FaArrowRight />
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4">
-                  <div className="bg-emerald-500 p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
-                    <div className="text-white text-4xl mb-2">
-                      <FaHeartbeat />
-                    </div>
-                    <p className="text-white font-semibold">Couverture Santé</p>
-                  </div>
-                  <div className="bg-blue-500 p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
-                    <div className="text-white text-4xl mb-2">
-                      <FaUserMd />
-                    </div>
-                    <p className="text-white font-semibold">Soins Médicaux</p>
-                  </div>
-                </div>
-                <div className="space-y-4 mt-8">
-                  <div className="bg-yellow-500 p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
-                    <div className="text-white text-4xl mb-2">
-                      <FaHospital />
-                    </div>
-                    <p className="text-white font-semibold">Hospitalisation</p>
-                  </div>
-                  <div className="bg-purple-500 p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform">
-                    <div className="text-white text-4xl mb-2">
-                      <FaClinicMedical />
-                    </div>
-                    <p className="text-white font-semibold">Soins Spécialisés</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Decorative elements */}
-          <div className="absolute top-1/2 right-4 transform -translate-y-1/2">
-            <div className="text-primary opacity-10 text-9xl">
-              <FaPlus />
-            </div>
-          </div>
-          <div className="absolute bottom-4 left-4">
-            <div className="text-emerald-500 opacity-10 text-6xl">
-              <FaCircle />
-            </div>
-          </div>
-        </section>
-
-        {/* Help Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-12"
-            >
-              <h2 className="text-3xl font-bold text-center mb-12">Questions Fréquentes</h2>
-              
-              <motion.div
-                variants={itemVariants}
-                className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300"
-              >
-                <h3 className="text-2xl font-semibold mb-4 text-primary">Comment trouver une mutuelle pas chère ?</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Pour trouver une mutuelle pas chère et faire le bon choix en matière de garanties, utilisez notre comparateur de mutuelles santé. Vous bénéficiez d'un outil en ligne gratuit vous permettant de souscrire un contrat de mutuelle santé offrant les meilleures garanties au meilleur prix. Si vous avez de faibles revenus, vous pouvez tirer avantage de la complémentaire santé solidaire.
-                </p>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300"
-              >
-                <h3 className="text-2xl font-semibold mb-4 text-primary">Comment fonctionne le remboursement par une mutuelle santé ?</h3>
-                <div className="text-gray-700 leading-relaxed space-y-4">
-                  <p>
-                    Le remboursement des frais de santé en France repose sur un système à deux niveaux : la Sécurité sociale et la mutuelle santé. La Sécurité sociale rembourse généralement 70% de la base de remboursement, laissant 30% (le ticket modérateur) à la charge du patient ou de sa mutuelle.
-                  </p>
-                  <p>
-                    Les mutuelles complètent ce remboursement et peuvent couvrir des dépenses non prises en charge par la Sécurité sociale, comme les dépassements d'honoraires. Le niveau de remboursement de la mutuelle varie selon le contrat souscrit (100%, 150%, 200%, etc.).
-                  </p>
-                  <p>
-                    Pour être remboursé, présentez votre carte Vitale lors des soins pris en charge par la Sécurité sociale. Les informations sont ensuite transmises automatiquement à votre mutuelle. Pour les dépenses non couvertes, envoyez une facture directement à votre mutuelle.
-                  </p>
-                  <p>
-                    Les contrats responsables et solidaires peuvent offrir une prise en charge totale pour certains équipements éligibles au 100% Santé. Attention toutefois au délai de carence lors de la souscription d'un nouveau contrat, pendant lequel certaines garanties peuvent ne pas s'appliquer.
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300"
-              >
-                <h3 className="text-2xl font-semibold mb-4 text-primary">Comment résilier sa mutuelle santé ?</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  Depuis le 1er décembre 2020, il est possible de résilier sa mutuelle santé à tout moment après un an de contrat, sans justification, en respectant un préavis d'un mois. Avant un an, la résiliation nécessite de justifier un changement de situation, comme un nouvel emploi avec mutuelle obligatoire, un mariage, une naissance ou un déménagement. La résiliation se fait généralement par courrier adressé à l'assureur.
-                </p>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Pricing Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="mb-16"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Quel est le prix d&apos;une mutuelle santé ?</h2>
-              
-              <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8 mb-12">
-                <h3 className="text-2xl font-semibold mb-6 text-center">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                    Prix de la mutuelle selon l&apos;âge
-                  </span>
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {priceData.age.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.02 }}
-                      className="bg-gradient-to-br from-white to-blue-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-blue-100"
-                    >
-                      <p className="font-medium text-gray-800 text-lg mb-2">{item.range}</p>
-                      <p className="text-blue-600 font-bold text-2xl">{item.price}</p>
-                      <p className="text-gray-500 text-sm mt-2">par mois</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8 mb-12">
-                <h3 className="text-2xl font-semibold mb-6 text-center">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                    Prix des mutuelles selon les zones géographiques
-                  </span>
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {priceData.location.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.02 }}
-                      className="bg-gradient-to-br from-white to-purple-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-purple-100"
-                    >
-                      <p className="font-medium text-gray-800 text-lg mb-2">{item.dept}</p>
-                      <p className="text-purple-600 font-bold text-2xl">{item.price}</p>
-                      <p className="text-gray-500 text-sm mt-2">par mois</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="bg-white rounded-xl shadow-lg p-8">
-                <h3 className="text-2xl font-semibold mb-6 text-center">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                    Prix de la mutuelle selon le niveau de garanties
-                  </span>
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {priceData.coverage.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.02 }}
-                      className="bg-gradient-to-br from-white to-green-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-green-100"
-                    >
-                      <p className="font-medium text-gray-800 text-lg mb-2">{item.level}</p>
-                      <p className="text-green-600 font-bold text-2xl">{item.price}</p>
-                      <p className="text-gray-500 text-sm mt-2">par mois</p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Pourquoi nous choisir ?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                variants={itemVariants}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
-              >
-                <div className="text-blue-600 mb-4">
-                  <FaUserFriends className="text-4xl" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">1. Remplissez le formulaire</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• Votre situation personnelle</li>
-                  <li>• Vos besoins en santé</li>
-                  <li>• Votre budget mensuel</li>
-                </ul>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
-              >
-                <div className="text-blue-600 mb-4">
-                  <FaSearch className="text-4xl" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">2. Comparez les offres</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• Analyse des garanties</li>
-                  <li>• Comparaison des prix</li>
-                  <li>• Services inclus</li>
-                </ul>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
-              >
-                <div className="text-blue-600 mb-4">
-                  <FaShieldAlt className="text-4xl" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">3. Souscrivez en ligne</h3>
-                <ul className="text-gray-600 space-y-2">
-                  <li>• Devis personnalisé</li>
-                  <li>• Souscription rapide</li>
-                  <li>• Assistance dédiée</li>
-                </ul>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Client Reviews Section */}
-        <section className="py-16 bg-white">
-          <div className="container mx-auto px-4">
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="mb-16"
-            >
-              <h2 className="text-3xl font-bold text-center mb-12">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                  Avis clients
-                </span>
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: 'Sophie B.',
-                    rating: 5,
-                    comment: 'Excellent service, conseillère au top. Agréable et professionnelle.',
-                    date: '07/03/2025'
-                  },
-                  {
-                    name: 'François R.',
-                    rating: 5,
-                    comment: 'Renseignements clairs, très bonne comparaison des offres.',
-                    date: '08/03/2025'
-                  },
-                  {
-                    name: 'Mathilde L.',
-                    rating: 5,
-                    comment: "Conseiller à l'écoute et échange très intéressant.",
-                    date: '07/03/2025'
-                  }
-                ].map((review, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.02 }}
-                    className="bg-gradient-to-br from-white to-blue-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex text-yellow-400 mb-4">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <FaStar key={i} className="w-6 h-6" />
-                      ))}
-                    </div>
-                    <p className="text-gray-700 mb-6 text-lg italic">{review.comment}</p>
-                    <div className="flex justify-between items-center text-sm">
-                      <p className="font-semibold text-blue-600">{review.name}</p>
-                      <p className="text-gray-500">{review.date}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Partners Section */}
-        <Partners />
-
-        {/* Footer note */}
-        <div className="container mx-auto px-4 py-8">
+        <section className="hero-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="text-center text-sm text-gray-500"
+            className="grid md:grid-cols-2 gap-12 items-center"
           >
-            <p>* Date de mise à jour : 02/04/2025. Étude des tarifs moyens proposés par nos partenaires assureurs, tous profils et tous niveaux de garanties confondus, du 1er au 31 Mars 2025.</p>
+            <motion.div variants={itemVariants} className="space-y-6">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
+                Trouvez la <span className="text-primary">mutuelle santé</span> idéale pour vous
+              </h1>
+              <p className="text-xl text-gray-600">
+                Comparez les meilleures offres et économisez jusqu'à 30% sur votre assurance santé.
+              </p>
+              <div className="flex space-x-4">
+                <button 
+                  onClick={() => router.push('/calculator')}
+                  className="btn-primary flex items-center space-x-2"
+                >
+                  <span>Comparer maintenant</span>
+                  <FaArrowRight />
+                </button>
+                <button className="btn-secondary">
+                  En savoir plus
+                </button>
+              </div>
+            </motion.div>
+            <motion.div variants={itemVariants} className="relative animate-float">
+              <Image
+                src="/hero-image.png"
+                alt="Insurance Comparison"
+                width={600}
+                height={400}
+                className="rounded-lg shadow-2xl"
+              />
+            </motion.div>
           </motion.div>
-        </div>
+        </section>
+
+        {/* Features Section */}
+        <section id="features" className="py-20 bg-white/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-center mb-12"
+            >
+              <h2 className="section-title">Pourquoi nous choisir ?</h2>
+              <p className="text-xl text-gray-600">Des solutions adaptées à vos besoins</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              <motion.div variants={itemVariants} className="feature-card">
+                <div className="text-primary text-4xl mb-4">
+                  <FaShieldAlt />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Protection Optimale</h3>
+                <p className="text-gray-600">Une couverture santé adaptée à votre situation</p>
+              </motion.div>
+
+              <motion.div variants={itemVariants} className="feature-card">
+                <div className="text-primary text-4xl mb-4">
+                  <FaEuroSign />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Meilleurs Prix</h3>
+                <p className="text-gray-600">Économisez sur votre mutuelle santé</p>
+              </motion.div>
+
+              <motion.div variants={itemVariants} className="feature-card">
+                <div className="text-primary text-4xl mb-4">
+                  <FaUserFriends />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">Accompagnement</h3>
+                <p className="text-gray-600">Des experts à votre écoute</p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Partners Section */}
+        <section id="partners" className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-center mb-12"
+            >
+              <h2 className="section-title">Nos Partenaires</h2>
+              <p className="text-xl text-gray-600">Les meilleures mutuelles santé vous font confiance</p>
+            </motion.div>
+            <Partners />
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 bg-primary/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="text-center"
+            >
+              <h2 className="section-title">Prêt à trouver votre mutuelle ?</h2>
+              <p className="text-xl text-gray-600 mb-8">
+                Obtenez votre devis personnalisé en quelques minutes
+              </p>
+              <button 
+                onClick={() => router.push('/calculator')}
+                className="btn-primary text-lg"
+              >
+                Comparer maintenant
+              </button>
+            </motion.div>
+          </div>
+        </section>
       </main>
-    </>
+
+      <footer className="bg-white border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-lg font-semibold mb-4">À propos</h3>
+              <p className="text-gray-600">
+                AssuranceComparateur vous aide à trouver la meilleure mutuelle santé adaptée à vos besoins.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Liens utiles</h3>
+              <ul className="space-y-2">
+                <li><Link href="#" className="text-gray-600 hover:text-primary">Comment ça marche</Link></li>
+                <li><Link href="#" className="text-gray-600 hover:text-primary">FAQ</Link></li>
+                <li><Link href="#" className="text-gray-600 hover:text-primary">Blog</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Contact</h3>
+              <ul className="space-y-2">
+                <li className="text-gray-600">contact@assurancecomparateur.fr</li>
+                <li className="text-gray-600">01 23 45 67 89</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Suivez-nous</h3>
+              <div className="flex space-x-4">
+                <a href="#" className="text-gray-600 hover:text-primary"><FaFacebook /></a>
+                <a href="#" className="text-gray-600 hover:text-primary"><FaTwitter /></a>
+                <a href="#" className="text-gray-600 hover:text-primary"><FaLinkedin /></a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 pt-8 border-t border-gray-200 text-center text-gray-600">
+            <p>&copy; {new Date().getFullYear()} AssuranceComparateur. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
   )
 } 

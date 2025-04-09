@@ -8,66 +8,66 @@ export const partners: Partner[] = [
   {
     id: 'aesio',
     name: 'Aésio Mutuelle',
-    logo: '/logos/partners/aesio.png'
+    logo: '/logos/partners/AESIO.png'
   },
   {
     id: 'apicil',
     name: 'Groupe Apicil',
-    logo: '/logos/partners/apicil.png'
+    logo: '/logos/partners/Apicil.png'
   },
   {
     id: 'april',
     name: 'April',
-    logo: '/logos/partners/april.png'
+    logo: '/logos/partners/April.png'
   },
   {
     id: 'direct-assurance',
     name: 'Direct Assurance',
-    logo: '/logos/partners/direct-assurance.png'
+    logo: '/logos/partners/DirectAssurance.png'
   },
   {
     id: 'identites',
     name: 'Identités Mutuelle',
-    logo: '/logos/partners/identites.png'
+    logo: '/logos/partners/Identites-Mutuelle.png'
   },
   {
     id: 'cnp',
     name: 'CNP Assurances',
-    logo: '/logos/partners/cnp.png'
+    logo: '/logos/partners/La-Mutuelle-Generale-CNP.png'
   },
   {
     id: 'meilleurtaux',
     name: 'Meilleur Taux Santé',
-    logo: '/logos/partners/meilleurtaux.png'
+    logo: '/logos/partners/Meilleurtaux-Sante.png'
   },
   {
     id: 'mgc',
     name: 'Mutuelle MGC',
-    logo: '/logos/partners/mgc.png'
+    logo: '/logos/partners/MGC.png'
   },
   {
     id: 'mgen',
     name: 'MGEN',
-    logo: '/logos/partners/mgen.png'
+    logo: '/logos/partners/MGEN.png'
   },
   {
     id: 'mma',
     name: 'MMA',
-    logo: '/logos/partners/mma.png'
+    logo: '/logos/partners/MMA.png'
   },
   {
     id: 'mutuelle-bleue',
     name: 'Mutuelle Bleue',
-    logo: '/logos/partners/mutuelle-bleue.png'
+    logo: '/logos/partners/Mutuelle-Bleue.png'
   },
   {
     id: 'matmut',
     name: 'Matmut',
-    logo: '/logos/partners/matmut.png'
+    logo: '/logos/partners/Ociane-Matmut.png'
   },
   {
     id: 'swiss-life',
     name: 'Swiss Life',
-    logo: '/logos/partners/swiss-life.png'
+    logo: '/logos/partners/SwissLife.png'
   }
 ]; 
