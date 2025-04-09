@@ -1,41 +1,50 @@
 {
   "pages": {
     "/_not-found": [
-      "static/chunks/webpack-55c30b40709f31ce.js",
+      "static/chunks/webpack-8a9dc00d6c7b0863.js",
       "static/chunks/fd9d1056-5de01e37d4a86d27.js",
       "static/chunks/410-6b32e3aee1981fd3.js",
       "static/chunks/main-app-e2bcb2020cd66065.js",
       "static/chunks/app/_not-found-1d93e0a6f084c1d4.js"
     ],
     "/layout": [
-      "static/chunks/webpack-55c30b40709f31ce.js",
+      "static/chunks/webpack-8a9dc00d6c7b0863.js",
       "static/chunks/fd9d1056-5de01e37d4a86d27.js",
       "static/chunks/410-6b32e3aee1981fd3.js",
       "static/chunks/main-app-e2bcb2020cd66065.js",
-      "static/css/ccf4b60208224a25.css",
-      "static/chunks/app/layout-a966c60e15bce66c.js"
+      "static/css/7bfa797e3449f721.css",
+      "static/chunks/app/layout-1db05a4fcb1e1d50.js"
     ],
     "/loading/page": [
-      "static/chunks/webpack-55c30b40709f31ce.js",
+      "static/chunks/webpack-8a9dc00d6c7b0863.js",
       "static/chunks/fd9d1056-5de01e37d4a86d27.js",
       "static/chunks/410-6b32e3aee1981fd3.js",
       "static/chunks/main-app-e2bcb2020cd66065.js",
-      "static/chunks/app/loading/page-94d6db940112c84c.js"
+      "static/chunks/app/loading/page-dc7e9ef8169885b5.js"
+    ],
+    "/calculator/page": [
+      "static/chunks/webpack-8a9dc00d6c7b0863.js",
+      "static/chunks/fd9d1056-5de01e37d4a86d27.js",
+      "static/chunks/410-6b32e3aee1981fd3.js",
+      "static/chunks/main-app-e2bcb2020cd66065.js",
+      "static/chunks/app/calculator/page-936e3f26d9a741ee.js"
     ],
     "/results/page": [
-      "static/chunks/webpack-55c30b40709f31ce.js",
+      "static/chunks/webpack-8a9dc00d6c7b0863.js",
       "static/chunks/fd9d1056-5de01e37d4a86d27.js",
       "static/chunks/410-6b32e3aee1981fd3.js",
       "static/chunks/main-app-e2bcb2020cd66065.js",
-      "static/chunks/80-15edb78b72afdc55.js",
+      "static/chunks/80-f564cbb990b6f0f3.js",
       "static/chunks/app/results/page-33a98848c60c1d69.js"
     ],
     "/page": [
-      "static/chunks/webpack-55c30b40709f31ce.js",
+      "static/chunks/webpack-8a9dc00d6c7b0863.js",
       "static/chunks/fd9d1056-5de01e37d4a86d27.js",
       "static/chunks/410-6b32e3aee1981fd3.js",
       "static/chunks/main-app-e2bcb2020cd66065.js",
-      "static/chunks/app/page-5632160121157f94.js"
+      "static/chunks/80-f564cbb990b6f0f3.js",
+      "static/chunks/432-c4d5b74638f87b4f.js",
+      "static/chunks/app/page-fdb80f1c6bdc9773.js"
     ]
   }
 }

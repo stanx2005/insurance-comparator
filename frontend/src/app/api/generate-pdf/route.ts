@@ -143,39 +143,46 @@ export async function POST(request: Request) {
       })
     }
 
-    // Insurance Type
-    page.drawText('Type d\'assurance', {
-      x: 50,
-      y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 450 : 300),
-      size: 16,
-    })
-
-    page.drawText(insuranceTypes[formData.insuranceType as keyof typeof insuranceTypes] || '', {
-      x: 50,
-      y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 480 : 330),
-      size: 12,
-    })
-
-    // Current Insurance Status
+    // Add current insurance situation
     page.drawText('Situation actuelle', {
       x: 50,
-      y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 520 : 370),
+      y: height - 450,
       size: 16,
     })
 
     page.drawText(`Assuré actuellement: ${formData.isCurrentlyInsured === 'yes' ? 'Oui' : 'Non'}`, {
       x: 50,
-      y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 550 : 400),
+      y: height - 480,
       size: 12,
     })
 
     if (formData.isCurrentlyInsured === 'yes') {
       page.drawText(`Fin du contrat actuel: ${formData.contractEndMonth}`, {
         x: 50,
-        y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 570 : 420),
+        y: height - 500,
         size: 12,
       })
+      if (formData.currentInsurer) {
+        page.drawText(`Assureur actuel: ${formData.currentInsurer}`, {
+          x: 50,
+          y: height - 520,
+          size: 12,
+        })
+      }
     }
+
+    // Insurance Type
+    page.drawText('Type d\'assurance', {
+      x: 50,
+      y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 550 : 400),
+      size: 16,
+    })
+
+    page.drawText(insuranceTypes[formData.insuranceType as keyof typeof insuranceTypes] || '', {
+      x: 50,
+      y: height - (formData.insuranceType === 'couple' || formData.insuranceType === 'couple_children' ? 580 : 430),
+      size: 12,
+    })
 
     // Coverage Details
     page.drawText('Couverture choisie', {

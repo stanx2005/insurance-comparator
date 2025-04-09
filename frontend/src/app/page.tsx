@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Head from 'next/head'
+import { motion } from 'framer-motion'
+import { FaArrowRight, FaChartLine, FaShieldAlt, FaEuroSign, FaUserFriends, FaSearch } from 'react-icons/fa'
 
 type CoverageType = 'personalized' | 'minimal' | 'balanced' | 'maximal'
 type CoverageLevels = {
@@ -75,6 +77,33 @@ export default function Home() {
     lastName: '',
     acceptTerms: false
   })
+
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5
+      }
+    }
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target
@@ -281,7 +310,7 @@ export default function Home() {
         <link rel="canonical" href="https://optisante.org" />
       </Head>
 
-      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">
+      <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
         <nav className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
@@ -318,118 +347,141 @@ export default function Home() {
         </nav>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block xl:inline">Health Insurance</span>{' '}
-                <span className="block text-blue-600 xl:inline">Comparison Features</span>
-              </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                Health Insurance comparison to your Health comparisons taped for to is your Wellness.
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center mb-16"
+          >
+            <motion.h1 
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6"
+            >
+              Comparez plus de 3200 formules santé et économisez en moyenne 415€ !*
+            </motion.h1>
+            
+            <motion.p 
+              variants={itemVariants}
+              className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto"
+            >
+              Trouvez la mutuelle santé qui correspond à vos besoins et à votre budget en quelques clics.
+            </motion.p>
+
+            <motion.div variants={itemVariants}>
+              <button
+                onClick={() => router.push('/calculator')}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 flex items-center justify-center mx-auto"
+              >
+                Comparer les mutuelles
+                <FaArrowRight className="ml-2" />
+              </button>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
+            >
+              <div className="text-blue-600 mb-4">
+                <FaChartLine className="text-3xl" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Comparaison complète</h3>
+              <p className="text-gray-600">
+                Comparez les garanties, les prix et les services de plus de 3200 formules santé.
               </p>
-              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left">
-                <Link
-                  href="/calculator"
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700"
-                >
-                  Trouvez votre assurance optimale
-                </Link>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
+            >
+              <div className="text-blue-600 mb-4">
+                <FaShieldAlt className="text-3xl" />
               </div>
-            </div>
-            <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-              <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
-                <div className="relative block w-full bg-gradient-to-r from-blue-400 via-green-300 to-blue-500 rounded-lg overflow-hidden">
-                  <div className="grid grid-cols-3 gap-4 p-8">
-                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
-                      <Image src="/images/heart.svg" alt="Health" width={40} height={40} />
-                    </div>
-                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
-                      <Image src="/images/medical.svg" alt="Medical" width={40} height={40} />
-                    </div>
-                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
-                      <Image src="/images/family.svg" alt="Family" width={40} height={40} />
-                    </div>
-                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
-                      <Image src="/images/dental.svg" alt="Dental" width={40} height={40} />
-                    </div>
-                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
-                      <Image src="/images/vision.svg" alt="Vision" width={40} height={40} />
-                    </div>
-                    <div className="bg-white p-4 rounded-full flex items-center justify-center">
-                      <Image src="/images/wellness.svg" alt="Wellness" width={40} height={40} />
-                    </div>
-                  </div>
+              <h3 className="text-xl font-semibold mb-2">Garanties adaptées</h3>
+              <p className="text-gray-600">
+                Trouvez la couverture qui correspond à votre profil et à vos besoins spécifiques.
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300"
+            >
+              <div className="text-blue-600 mb-4">
+                <FaEuroSign className="text-3xl" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Économies garanties</h3>
+              <p className="text-gray-600">
+                Réalisez jusqu'à 415€ d'économies en moyenne sur votre mutuelle santé.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="bg-white rounded-xl shadow-lg p-8 mb-16"
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Comment ça marche ?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="bg-blue-100 rounded-full p-4 mb-4">
+                  <FaUserFriends className="text-3xl text-blue-600" />
                 </div>
-              </div>
+                <h3 className="text-lg font-semibold mb-2">1. Définissez votre profil</h3>
+                <p className="text-gray-600">
+                  Indiquez votre situation personnelle et vos besoins en matière de santé.
+                </p>
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="bg-blue-100 rounded-full p-4 mb-4">
+                  <FaSearch className="text-3xl text-blue-600" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">2. Comparez les offres</h3>
+                <p className="text-gray-600">
+                  Recevez instantanément les meilleures offres adaptées à votre profil.
+                </p>
+              </motion.div>
+
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="bg-blue-100 rounded-full p-4 mb-4">
+                  <FaShieldAlt className="text-3xl text-blue-600" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">3. Souscrivez en ligne</h3>
+                <p className="text-gray-600">
+                  Choisissez votre mutuelle et souscrivez directement en ligne.
+                </p>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="text-center text-sm text-gray-500"
+          >
+            <p>* Date de mise à jour : 02/04/2025. Étude des tarifs moyens proposés par nos partenaires assureurs, tous profils et tous niveaux de garanties confondus, du 1er au 31 Mars 2025.</p>
+          </motion.div>
         </div>
-
-        <section id="features" className="py-12 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="lg:text-center">
-              <h2 className="text-base text-blue-600 font-semibold tracking-wide uppercase">Features</h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Une comparaison complète
-              </p>
-              <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                Découvrez les avantages de notre comparateur d'assurance santé
-              </p>
-            </div>
-
-            <div className="mt-10">
-              <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-                <div className="flex items-start">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">Comparaison rapide</h3>
-                    <p className="mt-2 text-base text-gray-500">
-                      Obtenez une comparaison instantanée des meilleures offres d'assurance santé.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">Prix transparents</h3>
-                    <p className="mt-2 text-base text-gray-500">
-                      Des tarifs clairs et détaillés pour chaque offre d'assurance.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="flex-shrink-0">
-                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-blue-500 text-white">
-                      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">Couverture complète</h3>
-                    <p className="mt-2 text-base text-gray-500">
-                      Une analyse détaillée des garanties pour chaque contrat.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </>
   )
