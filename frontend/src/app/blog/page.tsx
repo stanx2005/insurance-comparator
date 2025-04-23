@@ -105,16 +105,12 @@ export default async function BlogPage() {
             <article key={post.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48">
                 <Image
-                  src={post.image}
+                  src={post.id.startsWith('figaro') ? '/images/blog/default-figaro.jpg' : post.image}
                   alt={post.title}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority={post.id.startsWith('figaro')}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.src = '/images/blog/default-figaro.jpg'
-                  }}
                 />
               </div>
               <div className="p-6">
