@@ -82,6 +82,73 @@ export default function RootLayout({
             gtag('config', 'G-YW0DNYV163');
           `}
         </Script>
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "InsuranceAgency",
+              "name": "Optisanté",
+              "url": "https://optisante.org",
+              "logo": "https://optisante.org/logo.png",
+              "description": "Comparez les meilleures assurances santé en France. Trouvez la mutuelle adaptée à vos besoins et votre budget.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "FR"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+33123456789",
+                "contactType": "customer service",
+                "email": "contact@optisante.org",
+                "availableLanguage": "French"
+              },
+              "sameAs": [
+                "https://www.facebook.com/optisante",
+                "https://twitter.com/optisante",
+                "https://www.linkedin.com/company/optisante"
+              ],
+              "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "EUR",
+                "lowPrice": "48.04",
+                "highPrice": "135.21",
+                "offerCount": "4",
+                "offers": [
+                  {
+                    "@type": "Offer",
+                    "name": "Garanties renforcées",
+                    "price": "135.21",
+                    "priceCurrency": "EUR",
+                    "description": "Protection complète avec remboursements optimaux"
+                  },
+                  {
+                    "@type": "Offer",
+                    "name": "Garanties hybrides",
+                    "price": "86.80",
+                    "priceCurrency": "EUR",
+                    "description": "Équilibre entre couverture et budget"
+                  },
+                  {
+                    "@type": "Offer",
+                    "name": "Garanties intermédiaires",
+                    "price": "67.53",
+                    "priceCurrency": "EUR",
+                    "description": "Couverture standard adaptée"
+                  },
+                  {
+                    "@type": "Offer",
+                    "name": "Garanties économiques",
+                    "price": "48.04",
+                    "priceCurrency": "EUR",
+                    "description": "Protection de base abordable"
+                  }
+                ]
+              }
+            })
+          }}
+        />
       </head>
       <body className={inter.className}>
         {children}
