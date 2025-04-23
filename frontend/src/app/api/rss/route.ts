@@ -19,6 +19,9 @@ export async function GET() {
       // If no image found, use default
       if (!imageUrl) {
         imageUrl = '/images/blog/default-figaro.jpg'
+      } else {
+        // Use proxy for external images
+        imageUrl = `/api/proxy-image?url=${encodeURIComponent(imageUrl)}`
       }
 
       return {
