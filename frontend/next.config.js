@@ -2,7 +2,20 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    domains: ['localhost', 'www.lefigaro.fr', 'static.lefigaro.fr'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.lefigaro.fr',
+      },
+      {
+        protocol: 'https',
+        hostname: 'static.lefigaro.fr',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      }
+    ],
     unoptimized: true
   },
   typescript: {
