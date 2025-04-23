@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
 
-Sitemap: https://optisante.org/sitemap.xml 
+# Sitemap
+Sitemap: https://optisante.org/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10 

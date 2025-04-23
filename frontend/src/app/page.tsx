@@ -50,6 +50,12 @@ export default function Home() {
       { dept: 'Loire-Atlantique (44)', price: '120,87 €' },
       { dept: 'Ille-et-Vilaine (35)', price: '111,76 €' },
       { dept: 'Moselle (57)', price: '114,79 €' }
+    ],
+    coverage: [
+      { level: 'Garanties renforcées', price: '135,21 €', description: 'Protection complète avec remboursements optimaux' },
+      { level: 'Garanties hybrides', price: '86,80 €', description: 'Équilibre entre couverture et budget' },
+      { level: 'Garanties intermédiaires', price: '67,53 €', description: 'Couverture standard adaptée' },
+      { level: 'Garanties économiques', price: '48,04 €', description: 'Protection de base abordable' }
     ]
   }
 
@@ -71,6 +77,21 @@ export default function Home() {
       rating: 5,
       comment: "Conseiller à l'écoute et échange très intéressant.",
       date: '07/03/2024'
+    }
+  ]
+
+  const faqData = [
+    {
+      question: "Comment trouver une mutuelle pas chère ?",
+      answer: "Pour trouver une mutuelle pas chère et faire le bon choix en matière de garanties, utilisez notre comparateur de mutuelles santé. Vous bénéficiez d'un outil en ligne gratuit vous permettant de souscrire un contrat de mutuelle santé offrant les meilleures garanties au meilleur prix. Si vous avez de faibles revenus, vous pouvez tirer avantage de la complémentaire santé solidaire."
+    },
+    {
+      question: "Comment fonctionne le remboursement par une mutuelle santé ?",
+      answer: "Le remboursement des frais de santé en France repose sur un système à deux niveaux : la Sécurité sociale et la mutuelle santé. La Sécurité sociale rembourse généralement 70% de la base de remboursement, laissant 30% (le ticket modérateur) à la charge du patient ou de sa mutuelle. Les mutuelles complètent ce remboursement et peuvent couvrir des dépenses non prises en charge par la Sécurité sociale."
+    },
+    {
+      question: "Comment résilier sa mutuelle santé ?",
+      answer: "Depuis le 1er décembre 2020, il est possible de résilier sa mutuelle santé à tout moment après un an de contrat, sans justification, en respectant un préavis d'un mois. La résiliation se fait généralement par courrier adressé à l'assureur."
     }
   ]
 
@@ -233,6 +254,35 @@ export default function Home() {
               animate="visible"
               className="space-y-16"
             >
+              {/* Prix selon les garanties */}
+              <div>
+                <h2 className="section-title text-center mb-6">Comparer le prix des mutuelles selon le niveau de garanties</h2>
+                <p className="text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+                  Le prix de votre mutuelle est bien entendu en corrélation avec le niveau de garanties proposé. 
+                  Plus votre protection est complète, plus le prix de vos cotisations augmente.
+                </p>
+                <div className="bg-white rounded-xl shadow-xl overflow-hidden">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
+                    {priceData.coverage.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        variants={itemVariants}
+                        className="bg-gradient-to-br from-white to-primary/5 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-primary/10"
+                      >
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.level}</h3>
+                        <p className="text-3xl font-bold text-primary mb-2">{item.price}</p>
+                        <p className="text-sm text-gray-600">par mois</p>
+                        <p className="text-sm text-gray-600 mt-4">{item.description}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500 mt-6 text-center italic">
+                  * Date de mise à jour : 02/04/2025. Etude des tarifs moyens proposés par nos partenaires assureurs, 
+                  tous profils et tous niveaux de garanties, du 1er au 31 Mars 2025.
+                </p>
+              </div>
+
               {/* Prix selon l'âge */}
               <div>
                 <h2 className="section-title text-center mb-12">Prix de la mutuelle selon l'âge</h2>
@@ -293,6 +343,36 @@ export default function Home() {
                   Nos experts sont disponibles pour vous guider dans votre choix de mutuelle santé.
                 </p>
                 <button className="btn-primary">Contactez-nous</button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="space-y-8"
+            >
+              <div className="text-center mb-12">
+                <h2 className="section-title">Questions Fréquentes</h2>
+                <p className="text-xl text-gray-600">Tout ce que vous devez savoir sur les mutuelles santé</p>
+              </div>
+
+              <div className="grid gap-8">
+                {faqData.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <h3 className="text-xl font-semibold text-primary mb-4">{item.question}</h3>
+                    <p className="text-gray-600 leading-relaxed">{item.answer}</p>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           </div>
