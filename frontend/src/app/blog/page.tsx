@@ -109,6 +109,12 @@ export default async function BlogPage() {
                   alt={post.title}
                   fill
                   className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={post.id.startsWith('figaro')}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement
+                    target.src = '/images/blog/default-figaro.jpg'
+                  }}
                 />
               </div>
               <div className="p-6">

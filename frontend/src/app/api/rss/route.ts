@@ -6,18 +6,34 @@ export async function GET() {
     const figaroSanteFeed = await fetchRSSFeed('https://www.lefigaro.fr/demain/sante/rss')
     
     // Transform the feed items to match our blog post format
-    const transformedPosts = figaroSanteFeed.map((item, index) => ({
-      id: `figaro-${index + 1}`,
-      title: item.title,
-      slug: item.link.split('/').pop() || `figaro-${index + 1}`,
-      excerpt: item.description,
-      date: new Date(item.pubDate).toISOString().split('T')[0],
-      author: 'Le Figaro Santé',
-      image: item.media?.$.url || '/images/blog/default-figaro.jpg',
-      category: 'Actualités',
-      content: item.description,
-      readingTime: '5 min'
-    }))
+    const transformedPosts = figaroSanteFeed.map((item, index) => {
+      // Extract image URL from description or use default
+      let imageUrl = item.media?.$.url
+      if (!imageUrl && item.description) {
+        const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/)
+        if (imgMatch) {
+          imageUrl = imgMatch[1]
+        }
+      }
+      
+      // If no image found, use default
+      if (!imageUrl) {
+        imageUrl = '/images/blog/default-figaro.jpg'
+      }
+
+      return {
+        id: `figaro-${index + 1}`,
+        title: item.title,
+        slug: item.link.split('/').pop() || `figaro-${index + 1}`,
+        excerpt: item.description.replace(/<[^>]*>/g, '').substring(0, 200) + '...',
+        date: new Date(item.pubDate).toISOString().split('T')[0],
+        author: 'Le Figaro Santé',
+        image: imageUrl,
+        category: 'Actualités',
+        content: item.description,
+        readingTime: '5 min'
+      }
+    })
 
     return NextResponse.json(transformedPosts)
   } catch (error) {
