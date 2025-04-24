@@ -22,17 +22,17 @@ declare module 'next-auth/jwt' {
   }
 }
 
-if (!process.env.NEXTAUTH_SECRET) {
-  throw new Error('NEXTAUTH_SECRET is not set')
+const checkEnvironmentVariables = () => {
+  const requiredVars = ['NEXTAUTH_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD']
+  const missingVars = requiredVars.filter(varName => !process.env[varName])
+  
+  if (missingVars.length > 0) {
+    console.error('Missing required environment variables:', missingVars)
+    throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`)
+  }
 }
 
-if (!process.env.ADMIN_EMAIL) {
-  throw new Error('ADMIN_EMAIL is not set')
-}
-
-if (!process.env.ADMIN_PASSWORD) {
-  throw new Error('ADMIN_PASSWORD is not set')
-}
+checkEnvironmentVariables()
 
 const handler = NextAuth({
   providers: [
@@ -44,27 +44,41 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         try {
+          console.log('Starting authorization process')
+          
           if (!credentials?.email || !credentials?.password) {
-            throw new Error('Missing credentials')
+            console.error('Missing credentials in request')
+            return null
           }
 
           const adminEmail = process.env.ADMIN_EMAIL
           const adminPassword = process.env.ADMIN_PASSWORD
 
           if (!adminEmail || !adminPassword) {
-            throw new Error('Admin credentials not configured')
+            console.error('Admin credentials not configured in environment')
+            return null
           }
+
+          console.log('Checking email match:', {
+            provided: credentials.email,
+            expected: adminEmail
+          })
 
           if (credentials.email !== adminEmail) {
-            throw new Error('Invalid email')
+            console.error('Email mismatch')
+            return null
           }
 
+          console.log('Comparing passwords')
           const isValid = await compare(credentials.password, adminPassword)
+          console.log('Password validation result:', isValid)
           
           if (!isValid) {
-            throw new Error('Invalid password')
+            console.error('Invalid password')
+            return null
           }
 
+          console.log('Authentication successful')
           return {
             id: '1',
             email: credentials.email,
@@ -72,8 +86,8 @@ const handler = NextAuth({
             role: 'admin'
           }
         } catch (error) {
-          console.error('Auth error:', error)
-          throw error
+          console.error('Authentication error:', error)
+          return null
         }
       }
     })
