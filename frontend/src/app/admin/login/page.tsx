@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function AdminLogin() {
   const router = useRouter()
-  const { status } = useSession()
+  const { data: session, status } = useSession()
   const searchParams = useSearchParams()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -47,7 +47,7 @@ export default function AdminLogin() {
 
       if (result?.error) {
         setError('Invalid credentials')
-      } else {
+      } else if (result?.ok) {
         router.push('/admin/dashboard')
       }
     } catch (error) {
