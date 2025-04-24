@@ -41,6 +41,7 @@ export default function AdminLogin() {
         email,
         password,
         redirect: false,
+        callbackUrl: '/admin/dashboard'
       })
 
       console.log('Sign in result:', result)
