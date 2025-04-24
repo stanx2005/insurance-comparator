@@ -1,16 +1,25 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getToken } from 'next-auth/jwt'
 
-export function middleware(request: NextRequest) {
-  // Check if the request is for an admin route, but not the login page
-  if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
-    // Redirect to login if not authenticated
+export async function middleware(request: NextRequest) {
+  const token = await getToken({ req: request })
+  const isAuthPage = request.nextUrl.pathname.startsWith('/admin/login')
+  const isAdminPage = request.nextUrl.pathname.startsWith('/admin')
+
+  // If trying to access admin pages without being authenticated
+  if (isAdminPage && !isAuthPage && !token) {
     return NextResponse.redirect(new URL('/admin/login', request.url))
+  }
+
+  // If trying to access login page while being authenticated
+  if (isAuthPage && token) {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/admin/:path*',
+  matcher: ['/admin/:path*']
 } 

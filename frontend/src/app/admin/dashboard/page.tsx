@@ -1,31 +1,10 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useEffect } from 'react'
 
 export default function AdminDashboard() {
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
 
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      console.log('User is not authenticated, redirecting to login')
-      window.location.href = '/admin/login'
-    }
-  }, [status])
-
-  // Show loading state while checking authentication
-  if (status === 'loading') {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  // If not authenticated, don't render anything
   if (!session) {
     return null
   }

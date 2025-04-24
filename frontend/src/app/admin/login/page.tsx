@@ -2,22 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { signIn, useSession } from 'next-auth/react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 export default function AdminLogin() {
-  const router = useRouter()
   const { data: session, status } = useSession()
   const searchParams = useSearchParams()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    // If user is already logged in, redirect to dashboard
-    if (status === 'authenticated') {
-      console.log('User is authenticated, redirecting to dashboard')
-      window.location.href = '/admin/dashboard'
-    }
-  }, [status])
 
   useEffect(() => {
     // Check for error in URL
@@ -41,28 +32,17 @@ export default function AdminLogin() {
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false
+        redirect: true,
+        callbackUrl: '/admin/dashboard'
       })
 
       console.log('Sign in result:', result)
-
-      if (result?.error) {
-        setError('Invalid credentials')
-      } else if (result?.ok) {
-        console.log('Login successful, redirecting to dashboard')
-        window.location.href = '/admin/dashboard'
-      }
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred')
     } finally {
       setLoading(false)
     }
-  }
-
-  // If already authenticated, don't show login form
-  if (status === 'authenticated') {
-    return null
   }
 
   if (status === 'loading') {
