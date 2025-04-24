@@ -11,9 +11,16 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    console.log('=== Login Page Debug ===')
+    console.log('Session status:', status)
+    console.log('Session data:', session)
+  }, [status, session])
+
+  useEffect(() => {
     // Check for error in URL
     const error = searchParams.get('error')
     if (error) {
+      console.log('Error from URL:', error)
       setError('Invalid credentials')
     }
   }, [searchParams])
@@ -28,7 +35,12 @@ export default function AdminLogin() {
     const password = formData.get('password') as string
 
     try {
-      console.log('Attempting to sign in with:', { email })
+      console.log('Attempting sign in with credentials:', {
+        email,
+        timestamp: new Date().toISOString(),
+        hasPassword: !!password
+      })
+      
       const result = await signIn('credentials', {
         email,
         password,
@@ -36,10 +48,29 @@ export default function AdminLogin() {
         callbackUrl: '/admin/dashboard'
       })
 
-      console.log('Sign in result:', result)
+      console.log('Sign in result:', {
+        error: result?.error,
+        status: result?.status,
+        ok: result?.ok,
+        url: result?.url,
+        timestamp: new Date().toISOString()
+      })
+      
+      if (result?.error) {
+        console.error('Sign in failed:', result.error)
+        setError('Authentication failed')
+      } else if (!result?.ok) {
+        console.error('Sign in not ok:', result)
+        setError('Authentication failed')
+      }
     } catch (error) {
-      console.error('Sign in error:', error)
-      setError('An error occurred')
+      console.error('Sign in error:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+        timestamp: new Date().toISOString()
+      })
+      setError('An error occurred during sign in')
     } finally {
       setLoading(false)
     }
