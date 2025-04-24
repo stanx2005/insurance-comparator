@@ -41,19 +41,11 @@ export default function AdminLogin() {
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: false,
+        redirect: true,
         callbackUrl: '/admin/dashboard'
       })
 
       console.log('Sign in result:', result)
-
-      if (result?.error) {
-        setError('Invalid credentials')
-      } else if (result?.ok) {
-        console.log('Login successful, redirecting to dashboard')
-        // Use replace instead of push to prevent back navigation
-        router.replace('/admin/dashboard')
-      }
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred')

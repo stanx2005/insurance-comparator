@@ -10,6 +10,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
+      console.log('User is not authenticated, redirecting to login')
       router.replace('/admin/login')
     }
   }, [status, router])
@@ -38,6 +39,7 @@ export default function AdminDashboard() {
             <div className="mt-6">
               <p className="text-gray-600">Welcome, {session.user?.name || 'Admin'}!</p>
               <p className="text-gray-600">Email: {session.user?.email}</p>
+              <p className="text-gray-600">Role: {session.user?.role || 'admin'}</p>
             </div>
           </div>
         </div>
