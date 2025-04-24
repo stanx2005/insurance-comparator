@@ -111,16 +111,28 @@ const handler = NextAuth({
     },
     async redirect({ url, baseUrl }) {
       console.log('Redirect callback:', { url, baseUrl })
-      // Always redirect to dashboard after successful login
-      if (url.startsWith('/admin/login')) {
+      
+      // If the URL is the login page, redirect to dashboard
+      if (url.includes('/admin/login')) {
         return `${baseUrl}/admin/dashboard`
       }
-      // If the url is a relative URL, prefix it with the base URL
+      
+      // If the URL is a relative URL, prefix it with the base URL
       if (url.startsWith('/')) {
         return `${baseUrl}${url}`
-      } else if (new URL(url).origin === baseUrl) {
-        return url
       }
+      
+      // If the URL is from the same origin, allow it
+      try {
+        const urlObj = new URL(url)
+        if (urlObj.origin === baseUrl) {
+          return url
+        }
+      } catch (e) {
+        console.error('Invalid URL in redirect:', e)
+      }
+      
+      // Default to base URL
       return baseUrl
     }
   },

@@ -38,7 +38,8 @@ export default function AdminLogin() {
       console.log('Attempting sign in with credentials:', {
         email,
         timestamp: new Date().toISOString(),
-        hasPassword: !!password
+        hasPassword: !!password,
+        callbackUrl: '/admin/dashboard'
       })
       
       const result = await signIn('credentials', {
@@ -63,11 +64,11 @@ export default function AdminLogin() {
         console.error('Sign in not ok:', result)
         setError('Authentication failed')
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Sign in error:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
+        name: error?.name,
+        message: error?.message,
+        stack: error?.stack,
         timestamp: new Date().toISOString()
       })
       setError('An error occurred during sign in')
