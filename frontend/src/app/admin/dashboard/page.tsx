@@ -1,3 +1,5 @@
+export const dynamicConfig = 'force-dynamic'
+
 'use client'
 
 import { useState } from 'react'
@@ -21,7 +23,7 @@ interface BlogPost {
 }
 
 export default function AdminDashboard() {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -33,6 +35,24 @@ export default function AdminDashboard() {
     category: '',
     image: '',
   })
+
+  // Redirect if not authenticated
+  if (status === 'unauthenticated') {
+    router.push('/admin/login')
+    return null
+  }
+
+  // Show loading state while checking authentication
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -84,8 +104,8 @@ export default function AdminDashboard() {
     }
   }
 
-  if (!session) {
-    return null
+  const handleEditorChange = (content: string) => {
+    setPost(prev => ({ ...prev, content }))
   }
 
   return (
@@ -177,7 +197,7 @@ export default function AdminDashboard() {
               <div className="mt-1">
                 <ReactQuill
                   value={post.content}
-                  onChange={(content) => setPost(prev => ({ ...prev, content }))}
+                  onChange={handleEditorChange}
                   className="h-64 mb-12"
                 />
               </div>

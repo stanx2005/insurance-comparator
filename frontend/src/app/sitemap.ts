@@ -28,7 +28,7 @@ const blogPosts = [
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://assurancecomparateur.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://optisante.org'
   
   const routes = [
     {
