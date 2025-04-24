@@ -83,20 +83,6 @@ This project is licensed under the MIT License.
 - Environment variables loaded from .env.local
 - SMTP connection verified and working with Gmail
 
-### Active Issues
-1. Missing image files in public directory:
-   ```
-   /lelynx-logo.png
-   /logos/irp.png
-   /logos/generali.png
-   /logos/malakoff.png
-   /logos/mgen.png
-   /logos/april.png
-   /logos/swiss-life.png
-   /logos/axa.png
-   /logos/maaf.png
-   /logos/gmf.png
-   ```
 
 ### Next Steps After Restart
 1. Install Git properly:
@@ -126,9 +112,9 @@ This project is licensed under the MIT License.
    ```
    SMTP_HOST=smtp.gmail.com
    SMTP_PORT=587
-   SMTP_USER=sboudal05@gmail.com
+   SMTP_USER=email@gmail.com
    SMTP_PASS=your-app-password
-   SMTP_FROM=sboudal05@gmail.com
+   SMTP_FROM=email@gmail.com
    ```
 
 ## Current State
