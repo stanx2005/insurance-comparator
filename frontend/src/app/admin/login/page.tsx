@@ -14,6 +14,7 @@ export default function AdminLogin() {
   useEffect(() => {
     // If user is already logged in, redirect to dashboard
     if (status === 'authenticated') {
+      console.log('User is authenticated, redirecting to dashboard')
       router.replace('/admin/dashboard')
     }
   }, [status, router])
@@ -49,6 +50,7 @@ export default function AdminLogin() {
       if (result?.error) {
         setError('Invalid credentials')
       } else if (result?.ok) {
+        console.log('Login successful, redirecting to dashboard')
         // Use replace instead of push to prevent back navigation
         router.replace('/admin/dashboard')
       }

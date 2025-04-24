@@ -111,6 +111,10 @@ const handler = NextAuth({
     },
     async redirect({ url, baseUrl }) {
       console.log('Redirect callback:', { url, baseUrl })
+      // Always redirect to dashboard after successful login
+      if (url.startsWith('/admin/login')) {
+        return `${baseUrl}/admin/dashboard`
+      }
       // If the url is a relative URL, prefix it with the base URL
       if (url.startsWith('/')) {
         return `${baseUrl}${url}`
@@ -125,7 +129,7 @@ const handler = NextAuth({
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development',
+  debug: true, // Enable debug mode
 })
 
 export { handler as GET, handler as POST } 
