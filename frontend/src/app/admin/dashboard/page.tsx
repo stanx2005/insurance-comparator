@@ -1,20 +1,19 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession()
-  const router = useRouter()
 
   useEffect(() => {
     if (status === 'unauthenticated') {
       console.log('User is not authenticated, redirecting to login')
-      router.replace('/admin/login')
+      window.location.href = '/admin/login'
     }
-  }, [status, router])
+  }, [status])
 
+  // Show loading state while checking authentication
   if (status === 'loading') {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -26,6 +25,7 @@ export default function AdminDashboard() {
     )
   }
 
+  // If not authenticated, don't render anything
   if (!session) {
     return null
   }

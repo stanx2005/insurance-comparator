@@ -15,9 +15,9 @@ export default function AdminLogin() {
     // If user is already logged in, redirect to dashboard
     if (status === 'authenticated') {
       console.log('User is authenticated, redirecting to dashboard')
-      router.replace('/admin/dashboard')
+      window.location.href = '/admin/dashboard'
     }
-  }, [status, router])
+  }, [status])
 
   useEffect(() => {
     // Check for error in URL
@@ -41,11 +41,17 @@ export default function AdminLogin() {
       const result = await signIn('credentials', {
         email,
         password,
-        redirect: true,
-        callbackUrl: '/admin/dashboard'
+        redirect: false
       })
 
       console.log('Sign in result:', result)
+
+      if (result?.error) {
+        setError('Invalid credentials')
+      } else if (result?.ok) {
+        console.log('Login successful, redirecting to dashboard')
+        window.location.href = '/admin/dashboard'
+      }
     } catch (error) {
       console.error('Sign in error:', error)
       setError('An error occurred')
