@@ -21,7 +21,7 @@ const blogPosts: BlogPost[] = [
     excerpt: 'L\'année 2025 marquera une nouvelle hausse des tarifs des mutuelles santé, avec une augmentation moyenne de 6%. Découvrez les impacts et les solutions.',
     date: '2024-03-23',
     author: 'Optisanté',
-    image: '/images/blog/default-blog.jpg',
+    image: '/images/blog/augmentation-tarifs.jpg',
     category: 'Actualités'
   },
   {
@@ -31,7 +31,7 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Suite à l\'attaque contre l\'organisme de tiers-payant Viamedis, 20 millions de cartes Vitale ont été compromises. Comment se protéger ?',
     date: '2024-03-22',
     author: 'Optisanté',
-    image: '/images/blog/default-blog.jpg',
+    image: '/images/blog/carte-vitale.jpg',
     category: 'Sécurité'
   },
   {
@@ -41,7 +41,7 @@ const blogPosts: BlogPost[] = [
     excerpt: 'Les mutuelles veulent limiter le remboursement des lunettes et audioprothèses. Quelles sont les nouvelles règles et comment s\'adapter ?',
     date: '2024-03-21',
     author: 'Optisanté',
-    image: '/images/blog/default-blog.jpg',
+    image: '/images/blog/mutuelle-sante.jpg',
     category: 'Remboursements'
   }
 ]

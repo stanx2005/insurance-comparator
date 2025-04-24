@@ -155,6 +155,7 @@ export default function Home() {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <Link href="#features" className="nav-link">Fonctionnalités</Link>
+              <Link href="/blog" className="nav-link">Blog</Link>
               <Link href="#partners" className="nav-link">Partenaires</Link>
               <Link href="#contact" className="nav-link">Contact</Link>
               <button onClick={() => router.push('/calculator')} className="btn-primary">Comparer maintenant</button>
