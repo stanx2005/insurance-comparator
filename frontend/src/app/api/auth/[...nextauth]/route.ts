@@ -42,7 +42,7 @@ const handler = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         try {
           console.log('Starting authorization process')
           
@@ -108,6 +108,16 @@ const handler = NextAuth({
         session.user.role = token.role
       }
       return session
+    },
+    async redirect({ url, baseUrl }) {
+      console.log('Redirect callback:', { url, baseUrl })
+      // If the url is a relative URL, prefix it with the base URL
+      if (url.startsWith('/')) {
+        return `${baseUrl}${url}`
+      } else if (new URL(url).origin === baseUrl) {
+        return url
+      }
+      return baseUrl
     }
   },
   session: {
