@@ -100,6 +100,16 @@ export const metadata: Metadata = {
     description: 'Découvrez nos articles sur les mutuelles santé, les remboursements, et les actualités du secteur de l\'assurance santé.',
     type: 'website',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': [
+        {
+          title: 'RSS Feed',
+          url: '/api/rss',
+        },
+      ],
+    },
+  },
 }
 
 function BlogPostSkeleton() {

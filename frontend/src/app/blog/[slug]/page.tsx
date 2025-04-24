@@ -2,6 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import Script from 'next/script'
+import SocialShare from '@/components/SocialShare'
 
 interface BlogPost {
   id: string
@@ -106,12 +108,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
   }
 
+  const cleanContent = post.content.replace(/<[^>]*>/g, '').slice(0, 160)
+
   return {
     title: `${post.title} | Blog Assurance Santé`,
-    description: post.content.replace(/<[^>]*>/g, '').slice(0, 160),
+    description: cleanContent,
     openGraph: {
       title: post.title,
-      description: post.content.replace(/<[^>]*>/g, '').slice(0, 160),
+      description: cleanContent,
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
@@ -124,7 +128,52 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         },
       ],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: cleanContent,
+      images: [post.image],
+    },
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${post.slug}`,
+    },
   }
+}
+
+function StructuredData({ post }: { post: BlogPost }) {
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    image: post.image,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Optisanté',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`,
+      },
+    },
+    description: post.content.replace(/<[^>]*>/g, '').slice(0, 160),
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${post.slug}`,
+    },
+  }
+
+  return (
+    <Script
+      id="structured-data"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
+  )
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
@@ -134,8 +183,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     notFound()
   }
 
+  const postUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${post.slug}`
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <StructuredData post={post} />
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative h-96">
@@ -166,12 +218,15 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-gray-500">Par {post.author}</span>
                 </div>
-                <Link 
-                  href="/blog" 
-                  className="text-primary hover:text-primary-dark font-medium"
-                >
-                  Retour au blog
-                </Link>
+                <div className="flex items-center space-x-6">
+                  <SocialShare url={postUrl} title={post.title} />
+                  <Link 
+                    href="/blog" 
+                    className="text-primary hover:text-primary-dark font-medium"
+                  >
+                    Retour au blog
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

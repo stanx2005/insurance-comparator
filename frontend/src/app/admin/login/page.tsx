@@ -1,13 +1,30 @@
 'use client'
 
-import { useState } from 'react'
-import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function AdminLogin() {
   const router = useRouter()
+  const { status } = useSession()
+  const searchParams = useSearchParams()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    // If user is already logged in, redirect to dashboard
+    if (status === 'authenticated') {
+      router.push('/admin/dashboard')
+    }
+  }, [status, router])
+
+  useEffect(() => {
+    // Check for error in URL
+    const error = searchParams.get('error')
+    if (error) {
+      setError('Invalid credentials')
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -19,11 +36,14 @@ export default function AdminLogin() {
     const password = formData.get('password') as string
 
     try {
+      console.log('Attempting to sign in with:', { email })
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       })
+
+      console.log('Sign in result:', result)
 
       if (result?.error) {
         setError('Invalid credentials')
@@ -31,10 +51,22 @@ export default function AdminLogin() {
         router.push('/admin/dashboard')
       }
     } catch (error) {
+      console.error('Sign in error:', error)
       setError('An error occurred')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
