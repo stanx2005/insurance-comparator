@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 interface BlogPost {
   id: string
@@ -94,21 +96,42 @@ const blogPosts: Record<string, BlogPost> = {
   // Add more blog posts here
 }
 
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const post = blogPosts[params.slug]
+  
+  if (!post) {
+    return {
+      title: 'Article non trouvé',
+      description: 'L\'article que vous recherchez n\'existe pas.',
+    }
+  }
+
+  return {
+    title: `${post.title} | Blog Assurance Santé`,
+    description: post.content.replace(/<[^>]*>/g, '').slice(0, 160),
+    openGraph: {
+      title: post.title,
+      description: post.content.replace(/<[^>]*>/g, '').slice(0, 160),
+      type: 'article',
+      publishedTime: post.date,
+      authors: [post.author],
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+  }
+}
+
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = blogPosts[params.slug]
 
   if (!post) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Article non trouvé</h1>
-          <p className="text-xl text-gray-600 mb-8">L'article que vous recherchez n'existe pas.</p>
-          <Link href="/blog" className="text-primary hover:text-primary-dark font-medium">
-            Retour au blog
-          </Link>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
   return (
@@ -121,6 +144,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               alt={post.title}
               fill
               className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
             />
           </div>
           <div className="p-8">
@@ -132,13 +157,19 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               </div>
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-6">{post.title}</h1>
-            <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div 
+              className="prose prose-lg max-w-none" 
+              dangerouslySetInnerHTML={{ __html: post.content }} 
+            />
             <div className="mt-8 pt-8 border-t border-gray-200">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-gray-500">Par {post.author}</span>
                 </div>
-                <Link href="/blog" className="text-primary hover:text-primary-dark font-medium">
+                <Link 
+                  href="/blog" 
+                  className="text-primary hover:text-primary-dark font-medium"
+                >
                   Retour au blog
                 </Link>
               </div>

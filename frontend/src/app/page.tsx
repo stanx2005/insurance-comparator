@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { FaArrowRight, FaShieldAlt, FaEuroSign, FaUserFriends, FaFacebook, FaTwitter, FaLinkedin, FaStar } from 'react-icons/fa'
 import Partners from '@/components/Partners'
+import BlogPreview from '@/components/BlogPreview'
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -347,6 +348,9 @@ export default function Home() {
             </motion.div>
           </div>
         </section>
+
+        {/* Blog Preview Section */}
+        <BlogPreview />
 
         {/* FAQ Section */}
         <section className="py-20 bg-gray-50">
